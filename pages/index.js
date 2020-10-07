@@ -1,65 +1,99 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Link from 'next/link';
+import styled from 'styled-components';
+import Galery from '../components/Galery';
+import inventory from '../utils/dataBase';
+
+const HeroImage = styled.div`
+  width: 100vw;
+  height: 80vh;
+  background: url('/store.jpg') no-repeat;
+  background-color: #f5f0f8;
+  background-blend-mode: darken;
+  background-size: cover;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+`;
+
+const TextoBanner = styled.div`
+  display: block;
+  background: #f5f0f8;
+  width: 80vw;
+  margin: 2vh 0 0;
+  padding: 0.8rem 1rem 1.5rem 3rem;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.8rem;
+  color: #39343b;
+
+  span {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #f782c2;
+    font-size: 1.4rem;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  margin: 0 0 -0.5rem 30vw;
+  width: 70vw;
+  background: #f9c46b;
+  padding: 0.5rem 0 0.5rem 5vw;
+  position: relative;
+  top: -18px;
+
+  a {
+    display: inline-block;
+    border: solid 2px #c680eb;
+    background: #c680eb;
+    color: #f5f0f8;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0.3em;
+    border-radius: 3px;
+  }
+`;
+
+const Section = styled.section`
+  background: #f5f0f8;
+  padding: 20px 5vw;
+  color: #39343b;
+
+  img {
+    width: 90vw;
+  }
+`;
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>liamty.com</title>
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+      <HeroImage></HeroImage>
+      <TextoBanner>
+        Bienvenida a &nbsp;<span>Liamty</span>&nbsp; tu nueva tienda online
+        favorita
+      </TextoBanner>
+      <ButtonContainer>
+        <Link href="/tienda">
+          <a>Ver Productos</a>
+        </Link>
+      </ButtonContainer>
+      <Section>
+        <h2>Descuentos por temporada</h2>
+        <br />
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita
+          dolorum error ex dignissimos in officia tenetur non voluptas labore
+          incidunt.
         </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+        <br />
+        <img src="/50-off.jpeg" alt="" />
+      </Section>
+      <Galery itemsArray={inventory} />
+      <Section></Section>
+    </>
+  );
 }
