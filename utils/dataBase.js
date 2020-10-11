@@ -1,3 +1,20 @@
+// import postgres from 'postgres';
+// import dotenv from 'dotenv';
+// import camelcaseKeys from 'camelcase-keys';
+
+// dotenv.config();
+
+// const sql = postgres();
+
+// async function testMyWay(){
+// const test = await sql`
+// SELECT * FROM product;
+// `;
+
+// console.log(test)
+// }
+// testMyWay();
+
 export const categoryList = ['pants', 'tops', 'shoes'];
 
 const inventory = [
@@ -12,11 +29,11 @@ const inventory = [
     category: 'pants',
   },
   {
+    qty: 1,
+    size: 'M',
     id: 2,
     img: '/pants/gray-pants.jpg',
     price: 10000,
-    qty: 1,
-    size: 'M',
     sizeOptions: ['XL', 'L', 'M', 'S'],
     name: 'gray pants',
     category: 'pants',

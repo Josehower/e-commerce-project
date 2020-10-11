@@ -4,6 +4,8 @@ import NumberFormat from 'react-number-format';
 import { useState, useEffect, Fragment } from 'react';
 import nextCookies from 'next-cookies';
 import { updateArticle, deleteItemFromKart } from '../utils/cookies';
+import Link from 'next/link';
+import { colors } from '../components/Layout';
 
 const Div = styled.div`
   position: sticky;
@@ -15,6 +17,13 @@ const Div = styled.div`
   border-top: 3px black solid;
   padding: 5vw;
 `;
+const Hr = styled.hr`
+  border-top: 3px solid ${colors.gray};
+`;
+
+const ProductsWrapper = styled.div`
+  min-height: 80vh;
+`;
 
 const Carrito = (props) => {
   const [kartItems, setKartItems] = useState([]);
@@ -23,25 +32,29 @@ const Carrito = (props) => {
   }, [props.kartItems]);
   return (
     <>
-      {kartItems?.map((kartItem, index, array) => (
-        <Fragment key={`frag${kartItem.id}`}>
-          <KartCard
-            kartItem={kartItem}
-            updateArticle={updateArticle}
-            deleteItemFromKart={deleteItemFromKart}
-            setKartItems={setKartItems}
-            img={kartItem.img}
-            price={kartItem.price}
-            qty={kartItem.qty}
-            size={kartItem.size}
-            sizeOptions={kartItem.sizeOptions}
-            key={`card${kartItem.id}`}
-          />
-          {array.length - 1 === index ? '' : <hr key={`hr${kartItem.id}`} />}
-        </Fragment>
-      ))}
+      <ProductsWrapper>
+        {kartItems?.map((kartItem, index, array) => (
+          <Fragment key={`frag${kartItem.id}`}>
+            <KartCard
+              kartItem={kartItem}
+              updateArticle={updateArticle}
+              deleteItemFromKart={deleteItemFromKart}
+              setKartItems={setKartItems}
+              img={kartItem.img}
+              price={kartItem.price}
+              qty={kartItem.qty}
+              size={kartItem.size}
+              sizeOptions={kartItem.sizeOptions}
+              key={`card${kartItem.id}`}
+            />
+            {array.length - 1 === index ? '' : <Hr key={`hr${kartItem.id}`} />}
+          </Fragment>
+        ))}
+      </ProductsWrapper>
       <Div>
-        <button>Comprar</button>
+        <Link href={'/pago/informacion'}>
+          <button>Comprar</button>
+        </Link>
         <h2>Total:</h2> $
         <NumberFormat
           value={kartItems?.reduce((acc, { price, qty }) => {

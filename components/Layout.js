@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import LinkButton from './LinkButton';
 
-const colors = {
-  primary: '#F782C2',
-  primaryLight: '#C680EB',
-  secondary: '#F782C2',
-  white: '#F5F0F8',
-  black: '#39343B',
+export const colors = {
+  primary: '#C179EB',
+  primaryLight: '#E3C7F1',
+  primaryWhite: '#E3C7F1',
+  secondary: '#818FEB',
+  white: '#FCF7FF',
+  black: '#262427',
+  gray: '#ABAAAC',
 };
 
 const Kart = styled.img`
@@ -20,7 +22,9 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 5vw 20vw;
-  background: beige;
+  background: url('/jaspe.jpg') ${colors.primary} center;
+  background-size: cover;
+  background-blend-mode: soft-light;
 
   .storeName {
     text-decoration: none;
@@ -36,13 +40,13 @@ const Footer = styled.footer`
   display: flex;
   justify-content: space-between;
   padding: 0 10vw;
-  background: #c68f33;
-  color: #f5f0f8;
+  background: ${colors.secondary};
+  color: ${colors.white};
   padding: 30px 10vw;
   display: ${(props) => (props.visible ? 'static;' : 'none;')};
 
   a {
-    color: #951ad7;
+    color: ${colors.primaryLight};
   }
 `;
 
@@ -70,10 +74,12 @@ const MobileHeader = styled.header`
   grid-template-columns: 1fr 50px 50px;
   justify-items: center;
   align-items: center;
-  background: ${colors.primary};
+  background: url('/jaspe.jpg') ${colors.primary} center;
+  background-size: cover;
+  background-blend-mode: soft-light;
   padding: 10px 0;
   z-index: 200;
-  border-bottom: 2px solid ${colors.primary};
+  border-bottom: 2px solid ${colors.secondary};
   color: ${colors.white};
 
   button {
@@ -105,7 +111,7 @@ const MobileNav = styled.nav`
   left: ${(props) => (props.isNavActive ? '0' : '-1000px')};
 
   button {
-    background: #f5f0f8;
+    background: ${colors.primaryLight};
     border: none;
     color: #951ad7;
   }

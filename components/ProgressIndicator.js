@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from './Layout';
 
 const Container = styled.div`
   display: grid;
@@ -6,8 +7,8 @@ const Container = styled.div`
 `;
 
 const ProgressBox = styled.div`
-  background: ${(props) => (props.active ? 'white' : '#ccc')};
-  color: ${(props) => (props.active ? 'black;' : '#fff;')};
+  background: ${(props) => (props.active ? colors.white : '#5662B1')};
+  color: ${(props) => (props.active ? colors.black : '#B6BDED')};
   border-left: solid 1px white;
   text-align: center;
   padding: 10px 0;

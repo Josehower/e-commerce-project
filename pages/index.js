@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import Galery from '../components/Galery';
 import inventory from '../utils/dataBase';
+import { colors } from '../components/Layout';
 
 const HeroImage = styled.div`
   width: 100vw;
@@ -18,7 +19,7 @@ const HeroImage = styled.div`
 
 const TextoBanner = styled.div`
   display: block;
-  background: #f5f0f8;
+  background: #fcf7ff;
   width: 80vw;
   margin: 2vh 0 0;
   padding: 0.8rem 1rem 1.5rem 3rem;
@@ -30,7 +31,7 @@ const TextoBanner = styled.div`
   span {
     font-weight: bold;
     text-decoration: underline;
-    color: #f782c2;
+    color: #818feb;
     font-size: 1.4rem;
   }
 `;
@@ -38,16 +39,16 @@ const TextoBanner = styled.div`
 const ButtonContainer = styled.div`
   margin: 0 0 -0.5rem 30vw;
   width: 70vw;
-  background: #f9c46b;
+  background: ${colors.secondary};
   padding: 0.5rem 0 0.5rem 5vw;
   position: relative;
   top: -18px;
 
   a {
     display: inline-block;
-    border: solid 2px #c680eb;
-    background: #c680eb;
-    color: #f5f0f8;
+    border: solid 1px ${colors.primaryLight};
+    color: ${colors.white};
+    background: ${colors.primary};
     font-weight: bold;
     text-decoration: none;
     padding: 0.3em;

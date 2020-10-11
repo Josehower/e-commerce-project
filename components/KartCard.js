@@ -36,7 +36,7 @@ const KartCard = (props) => {
   }
 
   return (
-    <Card>
+    <Card className={'kartCard'}>
       <Img src={kartItem.img} alt="blue-pants" />
       <TextCard>
         <h3>{kartItem.name}</h3>
