@@ -81,6 +81,7 @@ const MobileHeader = styled.header`
   z-index: 200;
   border-bottom: 2px solid ${colors.secondary};
   color: ${colors.white};
+  display: ${(props) => (props.visible ? 'static;' : 'none;')};
 
   button {
     padding-right: 3px;
@@ -119,6 +120,7 @@ const MobileNav = styled.nav`
 
 const Space = styled.div`
   height: 10vh;
+  display: ${(props) => (props.visible ? 'static;' : 'none;')}
   @media (min-width: 700px) {
     display: none;
   } ;
@@ -158,7 +160,9 @@ export default function Layout(props) {
           </Link>
         </Nav>
       </Header>
-      <MobileHeader version="mobile">
+      <MobileHeader
+      version="mobile"
+      visible={props.isHeaderVisible}>
         <Link href="/">
           <a className={'storeName'}>
             <StoreName>Liamty.com</StoreName>
@@ -177,9 +181,9 @@ export default function Layout(props) {
           <LinkButton text="Contacto" handler={toggle} href={'/contacto'} />
         </MobileNav>
       </MobileHeader>
-      <Space />
+      <Space visible={props.isHeaderVisible} />
       {props.children}
-      <Footer visible={props.visible}>
+      <Footer visible={props.isFooterVisible}>
         <h3>Liamty.com</h3>
         <Link href="/contacto">
           <a>Contacto</a>

@@ -3,7 +3,20 @@ import GlobalStyle from '../styles/globalStyles';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps, router }) {
-  console.log(router.asPath.split('/')[1]);
+
+function isFooterVisible(path)
+{
+const pathKeyWord = path.split('/')[1]
+
+const pathOption ={
+  'pago': false,
+  'administrador': false,
+}
+
+return pathOption[pathKeyWord] !== undefined ? pathOption[pathKeyWord]: "not pago or admin";
+
+}
+
   return (
     <>
       <GlobalStyle />
@@ -14,7 +27,10 @@ function MyApp({ Component, pageProps, router }) {
           rel="stylesheet"
         ></link>
       </Head>
-      <Layout visible={router.asPath.split('/')[1] !== 'pago'}>
+      <Layout
+      isFooterVisible={isFooterVisible(router.asPath)}
+      isHeaderVisible={router.asPath.split('/')[1] !== 'administrador'}
+      >
         <Component {...pageProps} />
       </Layout>
     </>

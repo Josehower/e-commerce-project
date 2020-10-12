@@ -13,15 +13,9 @@ CREATE TABLE product_sizes (
     FOREIGN KEY (size_id) REFERENCES size_options (id));
 
 
-SELECT
-  product.name, size_options.size_option_name
-FROM
-  product
-JOIN
-  product_sizes
-ON
-  product.id = product_sizes.product_id
-JOIN
-  size_options
-ON
-  size_options.id = product_sizes.size_id;
+SELECT product.name, size_options.size_option_name
+  FROM product
+  JOINproduct_sizes
+    ON product.id = product_sizes.product_id
+  JOIN size_options
+    ON size_options.id = product_sizes.size_id;

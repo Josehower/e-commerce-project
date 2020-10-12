@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import inventory from '../utils/dataBase';
 import { addItemToKart } from '../utils/cookies';
 
 const Img = styled.img`
@@ -42,12 +41,12 @@ const Product = (props) => {
   useEffect(() => {
     if (props.productId) {
       setProduct(
-        inventory.find((item) => {
+        props.inventory.find((item) => {
           return props.productId === item.id;
         }),
       );
     }
-  }, [props.productId]);
+  }, [props.productId, props.inventory]);
 
   return (
     <Card>

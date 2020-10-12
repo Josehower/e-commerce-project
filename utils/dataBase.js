@@ -1,105 +1,51 @@
-// import postgres from 'postgres';
-// import dotenv from 'dotenv';
-// import camelcaseKeys from 'camelcase-keys';
+import postgres from 'postgres';
+import camelcaseKeys from 'camelcase-keys';
+import dotenv from 'dotenv';
 
-// dotenv.config();
+dotenv.config();
+const sql = postgres();
 
-// const sql = postgres();
+export async function getInventory(){
 
-// async function testMyWay(){
-// const test = await sql`
-// SELECT * FROM product;
-// `;
+    const products = await sql`
+      SELECT * FROM product;
+    `;
 
-// console.log(test)
-// }
-// testMyWay();
+    const sizeOptions = await sql`
+    SELECT product.id, size_options.size_option_name
+      FROM product
+      JOIN product_sizes
+        ON product.id = product_sizes.product_id
+      JOIN size_options
+        ON size_options.id = product_sizes.size_id;
+    `;
 
-export const categoryList = ['pants', 'tops', 'shoes'];
+    const sizeOptionsCamel = sizeOptions.map(obj=>{return{
+     "id":obj.id, "sizeOptionName":obj.size_option_name
+    }})
 
-const inventory = [
-  {
-    id: 1,
-    img: '/pants/blue-pants.jpg',
-    price: 20000,
-    qty: 1,
-    size: 'M',
-    sizeOptions: ['L', 'M'],
-    name: 'blue pants',
-    category: 'pants',
-  },
-  {
-    qty: 1,
-    size: 'M',
-    id: 2,
-    img: '/pants/gray-pants.jpg',
-    price: 10000,
-    sizeOptions: ['XL', 'L', 'M', 'S'],
-    name: 'gray pants',
-    category: 'pants',
-  },
-  {
-    id: 3,
-    img: '/tops/lether-top.jpg',
-    price: 30000,
-    qty: 1,
-    size: 'M',
-    sizeOptions: ['XL', 'L', 'M', 'S'],
-    name: 'black top',
-    category: 'tops',
-  },
-  {
-    id: 4,
-    img: '/shoes/pink-shoes.jpg',
-    price: 15000,
-    qty: 1,
-    size: '26',
-    sizeOptions: ['28', '26', '24', '22'],
-    name: 'pink shoes',
-    category: 'shoes',
-  },
-  {
-    id: 5,
-    img: '/shoes/sprint-shoes.jpg',
-    price: 40000,
-    qty: 1,
-    size: '26',
-    sizeOptions: ['28', '26', '24', '22'],
-    name: 'flower shoes',
-    category: 'shoes',
-  },
-  {
-    id: 6,
-    img: '/tops/white-top.jpg',
-    price: 30000,
-    qty: 1,
-    size: 'M',
-    sizeOptions: ['XL', 'L', 'M', 'S'],
-    name: 'camiseta blanca',
-    category: 'tops',
-  },
-  {
-    id: 7,
-    img:
-      'https://images.pexels.com/photos/19090/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-    price: 60000,
-    qty: 1,
-    size: '26',
-    sizeOptions: ['28', '26', '24', '22'],
-    name: 'zapatos azules',
-    category: 'shoes',
-  },
-  {
-    id: 8,
-    img:
-      'https://images.pexels.com/photos/19090/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-    price: 60000,
-    qty: 1,
-    size: '26',
-    sizeOptions: ['28', '26', '24', '22'],
-    name: 'zapatos azules',
-    category: 'shoes',
-  },
-];
+    const sizeOptionsReduced = sizeOptionsCamel.reduce((acc, productOptions)=>{
 
-export default inventory;
+      acc[productOptions.id]
+      ? acc[productOptions.id] = [...acc[productOptions.id], productOptions.sizeOptionName]
+      : acc[productOptions.id] = [productOptions.sizeOptionName]
+
+      return acc
+
+    },{});
+
+    return products.map(product=>{return{...product,sizeOptions:sizeOptionsReduced[product.id], qty:1, size:sizeOptionsReduced[product.id][0] }})
+}
+
+export async function getCategories(){
+  const categoriesObject = await sql`
+  SELECT category FROM product;
+`;
+
+const categoyList = [...new Set(categoriesObject.map(obj=>obj.category))]
+
+return  categoyList
+
+}
+
+getCategories()

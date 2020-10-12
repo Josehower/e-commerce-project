@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import Product from '../../components/Product';
-import inventory from '../../utils/dataBase';
 
-const StoreItem = () => {
+
+const StoreItem = ({inventory}) => {
   const [avaliableItems, setAvaliableItems] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState();
@@ -21,11 +21,14 @@ const StoreItem = () => {
   useEffect(() => {
     setAvaliableItems(inventory.map((item) => item.id));
     setCurrentIndex(0);
-  }, []);
+  }, [inventory]);
 
   return (
     <>
-      <Product productId={avaliableItems[currentIndex]} />
+      <Product
+      productId={avaliableItems[currentIndex]}
+      inventory={inventory}
+      />
       <button onClick={backItem}>back</button>
       <button onClick={nextItem}>next</button>
     </>
@@ -33,3 +36,15 @@ const StoreItem = () => {
 };
 
 export default StoreItem;
+
+export async function getServerSideProps(){
+  const {getInventory} = await import('../../utils/dataBase');
+
+  const inventory = await getInventory()
+
+    return{
+      props: {
+        inventory,
+      },
+    };
+  }

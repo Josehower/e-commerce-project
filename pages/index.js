@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Galery from '../components/Galery';
-import inventory from '../utils/dataBase';
 import { colors } from '../components/Layout';
 
 const HeroImage = styled.div`
@@ -66,7 +65,7 @@ const Section = styled.section`
   }
 `;
 
-export default function Home() {
+export default function Home({inventory}) {
   return (
     <>
       <Head>
@@ -97,4 +96,16 @@ export default function Home() {
       <Section></Section>
     </>
   );
+}
+
+export async function getServerSideProps(){
+const {getInventory} = await import('../utils/dataBase');
+
+const inventory = await getInventory()
+
+  return{
+    props: {
+      inventory,
+    },
+  };
 }

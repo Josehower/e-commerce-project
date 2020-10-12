@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Product from '../../../components/Product';
-import inventory, { categoryList } from '../../../utils/dataBase';
 
 const StoreItem = (props) => {
   const [avaliableItems, setAvaliableItems] = useState([]);
@@ -19,7 +18,7 @@ const StoreItem = (props) => {
 
   useEffect(() => {
     setAvaliableItems(
-      inventory
+      props.inventory
         .filter((item) => item.category === props.category)
         .map((item) => item.id),
     );
@@ -27,7 +26,7 @@ const StoreItem = (props) => {
     const nameIdToArray = props.nameId.split('-');
 
     setCurrentIndex(
-      inventory
+      props.inventory
         .filter((item) => item.category === props.category)
         .map((item) => item.id)
         .findIndex(
@@ -35,15 +34,18 @@ const StoreItem = (props) => {
             itemId === parseInt(nameIdToArray[nameIdToArray.length - 1]),
         ),
     );
-  }, [props.category, props.nameId]);
+  }, [props.category, props.nameId, props.inventory]);
 
-  if (!categoryList.includes(props.category)) {
+  if (!props.categoryList.includes(props.category)) {
     return <div>not a category</div>;
   }
 
   return (
     <>
-      <Product productId={avaliableItems[currentIndex]} />
+      <Product
+      productId={avaliableItems[currentIndex]}
+      inventory={props.inventory}
+      />
       <button onClick={backItem}>back</button>
       <button onClick={nextItem}>next</button>
     </>
@@ -52,12 +54,14 @@ const StoreItem = (props) => {
 
 export default StoreItem;
 
-export function getServerSideProps(context) {
-  // context = {
-  //   query: { id: '1' },
-  //   params: { id: '1' },
-  // }
+export async function getServerSideProps(context) {
+
+  const {getInventory, getCategories} = await import('../../../utils/dataBase');
+
+  const inventory = await getInventory();
+  const categoryList = await getCategories();
+
   return {
-    props: { category: context.query.category, nameId: context.query.nameId },
+    props: { category: context.query.category, nameId: context.query.nameId, inventory, categoryList },
   };
 }
