@@ -5,7 +5,11 @@ import Link from 'next/link';
 import nextCookies from 'next-cookies';
 import { useState, useEffect, Fragment } from 'react';
 import KartCard from '../../components/KartCard';
-import { updateArticle, deleteItemFromKart } from '../../utils/cookies';
+import {
+  updateArticle,
+  deleteItemFromKart,
+  deleteKartCookie,
+} from '../../utils/cookies';
 import NumberFormat from 'react-number-format';
 
 const NextButton = styled.div`
@@ -76,6 +80,7 @@ const Resumen = (props) => {
         {kartItems?.map((kartItem, index, array) => (
           <Fragment key={`frag${kartItem.id}`}>
             <KartCard
+              setKartAmount={props.setKartAmount}
               kartItem={kartItem}
               updateArticle={updateArticle}
               deleteItemFromKart={deleteItemFromKart}
@@ -92,8 +97,15 @@ const Resumen = (props) => {
         ))}
       </div>
       <NextButton>
-        <Link href={'/pago/informacion'}>
-          <button>Comprar</button>
+        <Link href={'/compra-exitosa'}>
+          <button
+            onClick={() => {
+              deleteKartCookie();
+              props.setKartAmount(0);
+            }}
+          >
+            Comprar
+          </button>
         </Link>
         <p>Sólo Hacemos envíos a Colombia</p>
       </NextButton>
@@ -105,8 +117,7 @@ export default Resumen;
 
 export async function getServerSideProps(context) {
   const allCookies = nextCookies(context);
-  // Use "|| []" in order to use a default
-  // value, in case this is undefined
+
   const kartItems = allCookies.kart || [];
 
   return {

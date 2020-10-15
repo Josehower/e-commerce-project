@@ -34,3 +34,11 @@ export function deleteItemFromKart(itemId) {
   cookies.set('kart', updatedCookie);
   return cookies.getJSON('kart');
 }
+
+export function getClientCookies() {
+  return cookies.getJSON('kart');
+}
+
+export function deleteKartCookie() {
+  cookies.remove('kart');
+}

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { colors } from '../components/Layout';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const GlobalStyle = createGlobalStyle`
@@ -115,7 +116,7 @@ box-sizing: border-box;
 }
 
 body {
-    background: #F5F0F8;
+    background: ${colors.white};
     font-family: 'Sansita Swashed', cursive;
 }
 

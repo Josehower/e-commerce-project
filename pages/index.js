@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { memo } from 'react';
 import styled from 'styled-components';
 import Galery from '../components/Galery';
 import { colors } from '../components/Layout';
@@ -65,7 +66,7 @@ const Section = styled.section`
   }
 `;
 
-export default function Home({inventory}) {
+export default memo(function Home({ inventory }) {
   return (
     <>
       <Head>
@@ -96,14 +97,14 @@ export default function Home({inventory}) {
       <Section></Section>
     </>
   );
-}
+});
 
-export async function getServerSideProps(){
-const {getInventory} = await import('../utils/dataBase');
+export async function getServerSideProps() {
+  const { getInventory } = await import('../utils/dataBase');
 
-const inventory = await getInventory()
+  const inventory = await getInventory();
 
-  return{
+  return {
     props: {
       inventory,
     },

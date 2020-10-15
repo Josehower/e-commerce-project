@@ -20,14 +20,15 @@
     "module": "esnext",
     "moduleResolution": "node",
     "isolatedModules": true,
-    "target": "es5"
+    "target": "es5",
+    "types": ["jest"],
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "migrations/1602245424-e-commerce.mjs"
+    "src/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["cypress", "node_modules"]
 }

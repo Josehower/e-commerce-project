@@ -1,17 +1,15 @@
 import postgres from 'postgres';
-import camelcaseKeys from 'camelcase-keys';
 import dotenv from 'dotenv';
 
 dotenv.config();
 const sql = postgres();
 
-export async function getInventory(){
-
-    const products = await sql`
+export async function getInventory() {
+  const products = await sql`
       SELECT * FROM product;
     `;
 
-    const sizeOptions = await sql`
+  const sizeOptions = await sql`
     SELECT product.id, size_options.size_option_name
       FROM product
       JOIN product_sizes
@@ -20,32 +18,87 @@ export async function getInventory(){
         ON size_options.id = product_sizes.size_id;
     `;
 
-    const sizeOptionsCamel = sizeOptions.map(obj=>{return{
-     "id":obj.id, "sizeOptionName":obj.size_option_name
-    }})
+  const sizeOptionsCamel = sizeOptions.map((obj) => {
+    return {
+      id: obj.id,
+      sizeOptionName: obj.size_option_name,
+    };
+  });
 
-    const sizeOptionsReduced = sizeOptionsCamel.reduce((acc, productOptions)=>{
+  const sizeOptionsReduced = sizeOptionsCamel.reduce((acc, productOptions) => {
+    acc[productOptions.id]
+      ? (acc[productOptions.id] = [
+          ...acc[productOptions.id],
+          productOptions.sizeOptionName,
+        ])
+      : (acc[productOptions.id] = [productOptions.sizeOptionName]);
 
-      acc[productOptions.id]
-      ? acc[productOptions.id] = [...acc[productOptions.id], productOptions.sizeOptionName]
-      : acc[productOptions.id] = [productOptions.sizeOptionName]
+    return acc;
+  }, {});
 
-      return acc
-
-    },{});
-
-    return products.map(product=>{return{...product,sizeOptions:sizeOptionsReduced[product.id], qty:1, size:sizeOptionsReduced[product.id][0] }})
+  return products.map((product) => {
+    return {
+      ...product,
+      sizeOptions: sizeOptionsReduced[product.id],
+      qty: 1,
+      size: sizeOptionsReduced[product.id][0],
+    };
+  });
 }
 
-export async function getCategories(){
+export async function getCategories() {
   const categoriesObject = await sql`
   SELECT category FROM product;
 `;
 
-const categoyList = [...new Set(categoriesObject.map(obj=>obj.category))]
+  const categoyList = [...new Set(categoriesObject.map((obj) => obj.category))];
 
-return  categoyList
-
+  return categoyList;
 }
 
-getCategories()
+export async function createNewProduct(newProduct) {
+  const product = await sql`
+  INSERT INTO product ${sql(newProduct, 'name', 'category', 'price', 'img')}
+  RETURNING * ;`;
+
+  const sizesIdFromDb = await sql`
+  SELECT size_option_name FROM size_options;`;
+
+  const optionsObj = newProduct.sizeOptions.map((opt) => {
+    return { size_option_name: opt };
+  });
+
+  const reduced = sizesIdFromDb.reduce((acc, obj) => {
+    if (
+      acc.map((item) => item.size_option_name).includes(obj.size_option_name)
+    ) {
+      return acc.filter(
+        (item) => item.size_option_name !== obj.size_option_name,
+      );
+    }
+    return acc;
+  }, optionsObj);
+
+  if (reduced.length !== 0) {
+    await sql`
+  INSERT INTO size_options ${sql(reduced, 'size_option_name')}`;
+  }
+
+  for (const size of newProduct.sizeOptions) {
+    await sql`
+    INSERT INTO product_sizes VALUES (${product[0].id}, (SELECT id FROM size_options WHERE size_option_name = ${size}));`;
+  }
+
+  return;
+}
+
+export async function deleteProductById(productId) {
+  // remove product that cascade to the junction table.
+  const allProducts = await sql`
+  DELETE FROM product WHERE id = ${productId}RETURNING * ;`;
+  // purge non used sizes.
+  await sql`
+  DELETE FROM size_options WHERE id NOT IN (select size_id from product_sizes);`;
+
+  return allProducts;
+}

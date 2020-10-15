@@ -6,6 +6,7 @@ import nextCookies from 'next-cookies';
 import { updateArticle, deleteItemFromKart } from '../utils/cookies';
 import Link from 'next/link';
 import { colors } from '../components/Layout';
+import cartSum from '../utils/cartSum';
 
 const Div = styled.div`
   position: sticky;
@@ -30,12 +31,14 @@ const Carrito = (props) => {
   useEffect(() => {
     setKartItems(props.kartItems ? props.kartItems : []);
   }, [props.kartItems]);
+
   return (
     <>
-      <ProductsWrapper>
+      <ProductsWrapper data-cy="product-wrapper-on-kart">
         {kartItems?.map((kartItem, index, array) => (
           <Fragment key={`frag${kartItem.id}`}>
             <KartCard
+              setKartAmount={props.setKartAmount}
               kartItem={kartItem}
               updateArticle={updateArticle}
               deleteItemFromKart={deleteItemFromKart}
@@ -57,10 +60,7 @@ const Carrito = (props) => {
         </Link>
         <h2>Total:</h2> $
         <NumberFormat
-          value={kartItems?.reduce((acc, { price, qty }) => {
-            const itemTotal = price * qty;
-            return acc + itemTotal;
-          }, 0)}
+          value={cartSum(kartItems)}
           displayType={'text'}
           thousandSeparator={true}
         />

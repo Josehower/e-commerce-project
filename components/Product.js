@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import { addItemToKart } from '../utils/cookies';
+import { addItemToKart, getClientCookies } from '../utils/cookies';
 
 const Img = styled.img`
   width: 30vw;
@@ -73,6 +73,7 @@ const Product = (props) => {
         <label>
           Cantidad: &nbsp;
           <input
+            data-cy="input-qty-items-to-kart"
             type="number"
             min={1}
             max={99}
@@ -91,7 +92,13 @@ const Product = (props) => {
             thousandSeparator={true}
           />
         </div>
-        <button onClick={() => addItemToKart(product)}>
+        <button
+          data-cy={'button-add-to-kart'}
+          onClick={() => {
+            addItemToKart(product);
+            props.setKartAmount(getClientCookies().length);
+          }}
+        >
           agregar al carrito
         </button>
       </TextCard>

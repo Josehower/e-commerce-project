@@ -33,6 +33,7 @@ const KartCard = (props) => {
   function deleteKartItem() {
     const updatedKart = props.deleteItemFromKart(kartItem.id);
     props.setKartItems(updatedKart);
+    props.setKartAmount(updatedKart.length);
   }
 
   return (
@@ -77,7 +78,12 @@ const KartCard = (props) => {
             thousandSeparator={true}
           />
         </div>
-        <button onClick={deleteKartItem}>Remove</button>
+        <button
+          data-cy={`button-delete-item-from-kart-id-${kartItem.id}`}
+          onClick={deleteKartItem}
+        >
+          Remove
+        </button>
       </TextCard>
     </Card>
   );

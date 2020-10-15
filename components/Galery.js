@@ -30,7 +30,7 @@ const Galery = (props) => {
             item.id
           }`}
         >
-          <Image src={item.img} />
+          <Image data-cy={`galery-item-id-${item.id}`} src={item.img} />
         </Link>
       ))}
     </Grid>

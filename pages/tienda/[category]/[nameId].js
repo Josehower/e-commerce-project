@@ -43,11 +43,14 @@ const StoreItem = (props) => {
   return (
     <>
       <Product
-      productId={avaliableItems[currentIndex]}
-      inventory={props.inventory}
+        productId={avaliableItems[currentIndex]}
+        inventory={props.inventory}
+        setKartAmount={props.setKartAmount}
       />
       <button onClick={backItem}>back</button>
-      <button onClick={nextItem}>next</button>
+      <button data-cy="product-button-next" onClick={nextItem}>
+        next
+      </button>
     </>
   );
 };
@@ -55,13 +58,19 @@ const StoreItem = (props) => {
 export default StoreItem;
 
 export async function getServerSideProps(context) {
-
-  const {getInventory, getCategories} = await import('../../../utils/dataBase');
+  const { getInventory, getCategories } = await import(
+    '../../../utils/dataBase'
+  );
 
   const inventory = await getInventory();
   const categoryList = await getCategories();
 
   return {
-    props: { category: context.query.category, nameId: context.query.nameId, inventory, categoryList },
+    props: {
+      category: context.query.category,
+      nameId: context.query.nameId,
+      inventory,
+      categoryList,
+    },
   };
 }

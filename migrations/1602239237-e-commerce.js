@@ -13,7 +13,7 @@ exports.up = async (sql) => {
 		product_id INT,
 		size_id INT,
 		PRIMARY KEY (product_id, size_id),
-		FOREIGN KEY (product_id) REFERENCES product (id),
+		FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE,
 		FOREIGN KEY (size_id) REFERENCES size_options (id)
 	);
 `;

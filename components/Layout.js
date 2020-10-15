@@ -120,7 +120,7 @@ const MobileNav = styled.nav`
 
 const Space = styled.div`
   height: 10vh;
-  display: ${(props) => (props.visible ? 'static;' : 'none;')}
+  display: ${(props) => (props.visible ? 'static;' : 'none;')};
   @media (min-width: 700px) {
     display: none;
   } ;
@@ -153,6 +153,7 @@ export default function Layout(props) {
           <Link href="/contacto">
             <a>Contact</a>
           </Link>
+          <span data-cy="number-kart-nav-web">{props.kartAmount}</span>
           <Link href="/kart.png">
             <a>
               <Kart src="/kart.png" alt="" />
@@ -160,9 +161,7 @@ export default function Layout(props) {
           </Link>
         </Nav>
       </Header>
-      <MobileHeader
-      version="mobile"
-      visible={props.isHeaderVisible}>
+      <MobileHeader version="mobile" visible={props.isHeaderVisible}>
         <Link href="/">
           <a className={'storeName'}>
             <StoreName>Liamty.com</StoreName>
@@ -170,7 +169,8 @@ export default function Layout(props) {
         </Link>
         <Link href="/carrito">
           <a>
-            <Kart src="/kart.png" alt="" />
+            <span data-cy="number-kart-nav-mobile">{props.kartAmount}</span>
+            <Kart data-cy="icon-kart-nav-mobile" src="/kart.png" alt="" />
           </a>
         </Link>
         <button onClick={toggle}>X</button>
