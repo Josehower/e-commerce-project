@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import { addItemToKart, getClientCookies } from '../utils/cookies';
+import { addItemToCart, getClientCookies } from '../utils/cookies';
 
 const Img = styled.img`
   width: 30vw;
@@ -73,7 +73,7 @@ const Product = (props) => {
         <label>
           Cantidad: &nbsp;
           <input
-            data-cy="input-qty-items-to-kart"
+            data-cy="input-qty-items-to-cart"
             type="number"
             min={1}
             max={99}
@@ -93,10 +93,10 @@ const Product = (props) => {
           />
         </div>
         <button
-          data-cy={'button-add-to-kart'}
+          data-cy={'button-add-to-cart'}
           onClick={() => {
-            addItemToKart(product);
-            props.setKartAmount(getClientCookies().length);
+            addItemToCart(product);
+            props.setCartAmount(getClientCookies().length);
           }}
         >
           agregar al carrito

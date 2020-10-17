@@ -4,11 +4,11 @@ import { colors } from '../../components/Layout';
 import Link from 'next/link';
 import nextCookies from 'next-cookies';
 import { useState, useEffect, Fragment } from 'react';
-import KartCard from '../../components/KartCard';
+import CartCard from '../../components/CartCard';
 import {
   updateArticle,
-  deleteItemFromKart,
-  deleteKartCookie,
+  deleteItemFromCart,
+  deleteCartCookie,
 } from '../../utils/cookies';
 import NumberFormat from 'react-number-format';
 
@@ -56,10 +56,10 @@ const Hr = styled.hr`
 `;
 
 const Resumen = (props) => {
-  const [kartItems, setKartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
-    setKartItems(props.kartItems ? props.kartItems : []);
-  }, [props.kartItems]);
+    setCartItems(props.cartItems ? props.cartItems : []);
+  }, [props.cartItems]);
 
   return (
     <div>
@@ -67,7 +67,7 @@ const Resumen = (props) => {
       <StyledNumber>
         <h2>Total:</h2>
         <NumberFormat
-          value={kartItems?.reduce((acc, { price, qty }) => {
+          value={cartItems?.reduce((acc, { price, qty }) => {
             const itemTotal = price * qty;
             return acc + itemTotal;
           }, 0)}
@@ -77,22 +77,22 @@ const Resumen = (props) => {
         />
       </StyledNumber>
       <div>
-        {kartItems?.map((kartItem, index, array) => (
-          <Fragment key={`frag${kartItem.id}`}>
-            <KartCard
-              setKartAmount={props.setKartAmount}
-              kartItem={kartItem}
+        {cartItems?.map((cartItem, index, array) => (
+          <Fragment key={`frag${cartItem.id}`}>
+            <CartCard
+              setCartAmount={props.setCartAmount}
+              cartItem={cartItem}
               updateArticle={updateArticle}
-              deleteItemFromKart={deleteItemFromKart}
-              setKartItems={setKartItems}
-              img={kartItem.img}
-              price={kartItem.price}
-              qty={kartItem.qty}
-              size={kartItem.size}
-              sizeOptions={kartItem.sizeOptions}
-              key={`card${kartItem.id}`}
+              deleteItemFromCart={deleteItemFromCart}
+              setCartItems={setCartItems}
+              img={cartItem.img}
+              price={cartItem.price}
+              qty={cartItem.qty}
+              size={cartItem.size}
+              sizeOptions={cartItem.sizeOptions}
+              key={`card${cartItem.id}`}
             />
-            {array.length - 1 === index ? '' : <Hr key={`hr${kartItem.id}`} />}
+            {array.length - 1 === index ? '' : <Hr key={`hr${cartItem.id}`} />}
           </Fragment>
         ))}
       </div>
@@ -100,8 +100,8 @@ const Resumen = (props) => {
         <Link href={'/compra-exitosa'}>
           <button
             onClick={() => {
-              deleteKartCookie();
-              props.setKartAmount(0);
+              deleteCartCookie();
+              props.setCartAmount(0);
             }}
           >
             Comprar
@@ -118,11 +118,11 @@ export default Resumen;
 export async function getServerSideProps(context) {
   const allCookies = nextCookies(context);
 
-  const kartItems = allCookies.kart || [];
+  const cartItems = allCookies.cart || [];
 
   return {
     props: {
-      kartItems,
+      cartItems,
     },
   };
 }

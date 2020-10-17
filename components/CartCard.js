@@ -19,39 +19,39 @@ const TextCard = styled.div`
   gap: 0.5em;
 `;
 
-const KartCard = (props) => {
-  const [kartItem, setKartItem] = useState(props.kartItem);
+const CartCard = (props) => {
+  const [cartItem, setCartItem] = useState(props.cartItem);
 
-  function updateKartItem(keyName, newValue) {
-    const updatedItem = { ...kartItem };
+  function updateCartItem(keyName, newValue) {
+    const updatedItem = { ...cartItem };
     updatedItem[keyName] = newValue;
-    setKartItem(updatedItem);
-    const updatedKart = props.updateArticle(updatedItem, props.kartItem.id);
-    props.setKartItems(updatedKart);
+    setCartItem(updatedItem);
+    const updatedCart = props.updateArticle(updatedItem, props.cartItem.id);
+    props.setCartItems(updatedCart);
   }
 
-  function deleteKartItem() {
-    const updatedKart = props.deleteItemFromKart(kartItem.id);
-    props.setKartItems(updatedKart);
-    props.setKartAmount(updatedKart.length);
+  function deleteCartItem() {
+    const updatedCart = props.deleteItemFromCart(cartItem.id);
+    props.setCartItems(updatedCart);
+    props.setCartAmount(updatedCart.length);
   }
 
   return (
-    <Card className={'kartCard'}>
-      <Img src={kartItem.img} alt="blue-pants" />
+    <Card className={'cartCard'}>
+      <Img src={cartItem.img} alt="blue-pants" />
       <TextCard>
-        <h3>{kartItem.name}</h3>
+        <h3>{cartItem.name}</h3>
         <label>
           Talla: &nbsp;
           <select
             id="cars"
-            value={kartItem.size}
-            onChange={(e) => updateKartItem('size', e.currentTarget.value)}
+            value={cartItem.size}
+            onChange={(e) => updateCartItem('size', e.currentTarget.value)}
             onBlur={(e) => {
               return;
             }}
           >
-            {kartItem.sizeOptions.map((option) => (
+            {cartItem.sizeOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
               </option>
@@ -64,23 +64,23 @@ const KartCard = (props) => {
             type="number"
             min={1}
             max={99}
-            value={kartItem.qty}
+            value={cartItem.qty}
             onChange={(e) =>
-              updateKartItem('qty', parseInt(e.currentTarget.value, 10))
+              updateCartItem('qty', parseInt(e.currentTarget.value, 10))
             }
           />
         </label>
         <div>
           $&nbsp;
           <NumberFormat
-            value={kartItem.price * kartItem.qty}
+            value={cartItem.price * cartItem.qty}
             displayType={'text'}
             thousandSeparator={true}
           />
         </div>
         <button
-          data-cy={`button-delete-item-from-kart-id-${kartItem.id}`}
-          onClick={deleteKartItem}
+          data-cy={`button-delete-item-from-cart-id-${cartItem.id}`}
+          onClick={deleteCartItem}
         >
           Remove
         </button>
@@ -89,4 +89,4 @@ const KartCard = (props) => {
   );
 };
 
-export default KartCard;
+export default CartCard;

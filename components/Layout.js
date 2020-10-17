@@ -13,7 +13,7 @@ export const colors = {
   gray: '#ABAAAC',
 };
 
-const Kart = styled.img`
+const Cart = styled.img`
   width: 30px;
 `;
 
@@ -153,10 +153,10 @@ export default function Layout(props) {
           <Link href="/contacto">
             <a>Contact</a>
           </Link>
-          <span data-cy="number-kart-nav-web">{props.kartAmount}</span>
-          <Link href="/kart.png">
+          <span data-cy="number-cart-nav-web">{props.cartAmount}</span>
+          <Link href="/cart.png">
             <a>
-              <Kart src="/kart.png" alt="" />
+              <Cart src="/Cart.png" alt="" />
             </a>
           </Link>
         </Nav>
@@ -169,8 +169,8 @@ export default function Layout(props) {
         </Link>
         <Link href="/carrito">
           <a>
-            <span data-cy="number-kart-nav-mobile">{props.kartAmount}</span>
-            <Kart data-cy="icon-kart-nav-mobile" src="/kart.png" alt="" />
+            <span data-cy="number-cart-nav-mobile">{props.cartAmount}</span>
+            <Cart data-cy="icon-cart-nav-mobile" src="/Cart.png" alt="" />
           </a>
         </Link>
         <button onClick={toggle}>X</button>

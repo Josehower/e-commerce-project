@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getClientCookies } from '../utils/cookies';
 
 function MyApp({ Component, pageProps, router }) {
-  const [kartAmount, setKartAmount] = useState(0);
+  const [cartAmount, setCartAmount] = useState(0);
 
   function isFooterVisible(path) {
     const pathKeyWord = path.split('/')[1];
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps, router }) {
 
   useEffect(() => {
     if (getClientCookies()?.length) {
-      setKartAmount(getClientCookies()?.length);
+      setCartAmount(getClientCookies()?.length);
     }
   }, []);
 
@@ -39,9 +39,9 @@ function MyApp({ Component, pageProps, router }) {
       <Layout
         isFooterVisible={isFooterVisible(router.asPath)}
         isHeaderVisible={router.asPath.split('/')[1] !== 'administrador'}
-        kartAmount={kartAmount}
+        cartAmount={cartAmount}
       >
-        <Component {...pageProps} setKartAmount={setKartAmount} />
+        <Component {...pageProps} setCartAmount={setCartAmount} />
       </Layout>
     </>
   );

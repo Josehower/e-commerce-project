@@ -45,7 +45,7 @@ const StoreItem = (props) => {
       <Product
         productId={avaliableItems[currentIndex]}
         inventory={props.inventory}
-        setKartAmount={props.setKartAmount}
+        setCartAmount={props.setCartAmount}
       />
       <button onClick={backItem}>back</button>
       <button data-cy="product-button-next" onClick={nextItem}>

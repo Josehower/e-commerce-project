@@ -1,44 +1,53 @@
 import cookies from 'js-cookie';
 
-export function addItemToKart(newItem) {
-  const currentKart = cookies.getJSON('kart') ? cookies.getJSON('kart') : [];
+export function addItemToCart(newItem) {
+  const currentCart = cookies.getJSON('cart') ? cookies.getJSON('cart') : [];
 
-  const indexOfItemToSum = currentKart.findIndex(
-    (item) => item.id === newItem.id,
+  const cookieItemInfo = {
+    id: newItem.id,
+    qty: newItem.qty,
+    sizeId: newItem.sizeOptions.findIndex((option) => newItem.size === option),
+  };
+
+  console.log('new testitem cookie-8', cookieItemInfo);
+
+  const indexOfItemToSum = currentCart.findIndex(
+    (item) => item.id === cookieItemInfo.id,
   );
 
   if (indexOfItemToSum !== -1) {
-    currentKart[indexOfItemToSum].qty += newItem.qty;
-    cookies.set('kart', JSON.stringify([...currentKart]));
+    currentCart[indexOfItemToSum].qty += cookieItemInfo.qty;
+    currentCart[indexOfItemToSum].size = cookieItemInfo.size;
+    cookies.set('cart', JSON.stringify([...currentCart]));
     return;
   }
 
-  cookies.set('kart', JSON.stringify([...currentKart, newItem]));
+  cookies.set('cart', JSON.stringify([...currentCart, cookieItemInfo]));
 }
 
 export function updateArticle(newItem, OldItemId) {
   const itemIndexOnCookie = cookies
-    .getJSON('kart')
+    .getJSON('cart')
     .findIndex((item) => item.id === OldItemId);
-  const kartCopy = [...cookies.getJSON('kart')];
-  kartCopy[itemIndexOnCookie] = newItem;
-  cookies.set('kart', kartCopy);
-  return cookies.getJSON('kart');
+  const cartCopy = [...cookies.getJSON('cart')];
+  cartCopy[itemIndexOnCookie] = newItem;
+  cookies.set('cart', cartCopy);
+  return cookies.getJSON('cart');
 }
 
-export function deleteItemFromKart(itemId) {
+export function deleteItemFromCart(itemId) {
   const updatedCookie = cookies
-    .getJSON('kart')
+    .getJSON('cart')
     .filter((item) => item.id !== itemId);
 
-  cookies.set('kart', updatedCookie);
-  return cookies.getJSON('kart');
+  cookies.set('cart', updatedCookie);
+  return cookies.getJSON('cart');
 }
 
 export function getClientCookies() {
-  return cookies.getJSON('kart');
+  return cookies.getJSON('cart');
 }
 
-export function deleteKartCookie() {
-  cookies.remove('kart');
+export function deleteCartCookie() {
+  cookies.remove('cart');
 }

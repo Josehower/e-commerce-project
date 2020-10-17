@@ -102,3 +102,48 @@ export async function deleteProductById(productId) {
 
   return allProducts;
 }
+
+export async function getProductsById(productsId) {
+  const products = await productsId.map(async (product) => {
+    const productPrice = await sql`
+    SELECT * FROM product where id = ${product};`;
+
+    const sizeOptions = await sql`
+    SELECT product.id, size_options.size_option_name
+      FROM product
+      JOIN product_sizes
+        ON product.id = product_sizes.product_id
+      JOIN size_options
+        ON size_options.id = product_sizes.size_id where product.id = ${product};`;
+
+    const sizeOptionsCamel = sizeOptions.map((obj) => {
+      return {
+        id: obj.id,
+        sizeOptionName: obj.size_option_name,
+      };
+    });
+
+    const sizeOptionsReduced = sizeOptionsCamel.reduce(
+      (acc, productOptions) => {
+        acc[productOptions.id]
+          ? (acc[productOptions.id] = [
+              ...acc[productOptions.id],
+              productOptions.sizeOptionName,
+            ])
+          : (acc[productOptions.id] = [productOptions.sizeOptionName]);
+
+        return acc;
+      },
+      {},
+    );
+
+    return productPrice.map((item) => {
+      return {
+        ...item,
+        sizeOptions: sizeOptionsReduced[item.id],
+      };
+    });
+  });
+
+  return Promise.all(products).then((res) => res.map((product) => product[0]));
+}
