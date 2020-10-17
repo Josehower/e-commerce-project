@@ -4,13 +4,16 @@ import { colors } from '../../components/Layout';
 import Link from 'next/link';
 import nextCookies from 'next-cookies';
 import { useState, useEffect, Fragment } from 'react';
-import CartCard from '../../components/CartCard';
+import CheckoutReview from '../../components/CheckoutReview';
 import {
   updateArticle,
   deleteItemFromCart,
   deleteCartCookie,
+  isObjectCookieNotWellFormated,
 } from '../../utils/cookies';
 import NumberFormat from 'react-number-format';
+
+type ProductArray = { cartItems: ProductType[] };
 
 const NextButton = styled.div`
   background: ${colors.secondary};
@@ -55,11 +58,21 @@ const Hr = styled.hr`
   border-top: 3px solid ${colors.gray};
 `;
 
-const Resumen = (props) => {
+const Resumen = ({
+  cartItemsFromProps,
+  corruptCookie = false,
+  setCartAmount,
+}) => {
   const [cartItems, setCartItems] = useState([]);
+
   useEffect(() => {
-    setCartItems(props.cartItems ? props.cartItems : []);
-  }, [props.cartItems]);
+    setCartItems(cartItemsFromProps ? cartItemsFromProps : []);
+    console.log(corruptCookie);
+    if (corruptCookie) {
+      deleteCartCookie();
+      setCartAmount(0);
+    }
+  }, [cartItemsFromProps, corruptCookie]);
 
   return (
     <div>
@@ -79,8 +92,8 @@ const Resumen = (props) => {
       <div>
         {cartItems?.map((cartItem, index, array) => (
           <Fragment key={`frag${cartItem.id}`}>
-            <CartCard
-              setCartAmount={props.setCartAmount}
+            <CheckoutReview
+              setCartAmount={setCartAmount}
               cartItem={cartItem}
               updateArticle={updateArticle}
               deleteItemFromCart={deleteItemFromCart}
@@ -101,7 +114,7 @@ const Resumen = (props) => {
           <button
             onClick={() => {
               deleteCartCookie();
-              props.setCartAmount(0);
+              setCartAmount(0);
             }}
           >
             Comprar
@@ -116,13 +129,61 @@ const Resumen = (props) => {
 export default Resumen;
 
 export async function getServerSideProps(context) {
-  const allCookies = nextCookies(context);
+  const { getProductsById } = await import('../../utils/dataBase');
 
-  const cartItems = allCookies.cart || [];
+  const cartCookie = nextCookies(context).cart || [];
+
+  //make happy typescript
+  const cart = [...cartCookie].map((obj) => {
+    const objArr = Object.entries(obj);
+    objArr.map(([key, value]: string[]) => [key, parseInt(value, 10)]);
+    const newObj: CookieObjType = { qty: NaN, id: NaN, sizeId: NaN };
+    objArr.forEach(([key, value]) => {
+      newObj[key] = value;
+    });
+    return newObj;
+  });
+
+  const cartItemsOnCookie: CookieType | [] = [...cart];
+  const cartItemsOnCookieIds = cartItemsOnCookie.map((item) => item.id);
+
+  let dataBaseProduct = await getProductsById(cartItemsOnCookieIds);
+
+  let corruptCookie = false;
+  //validate the important info from cookie and validate the sizeId from cookie against the database
+  cartItemsOnCookie.forEach((itemOnCookie) => {
+    const referenceProduct = dataBaseProduct.find(
+      (item) => item?.id === itemOnCookie?.id,
+    );
+    const sizeOptionsRef = referenceProduct
+      ? referenceProduct.sizeOptions?.length
+      : false;
+
+    if (isObjectCookieNotWellFormated(itemOnCookie, sizeOptionsRef)) {
+      dataBaseProduct = [];
+      corruptCookie = true;
+      console.log(corruptCookie, itemOnCookie, sizeOptionsRef);
+    }
+  });
+
+  const cartItemsFromProps: ProductArray | [] = dataBaseProduct.map(
+    (product) => {
+      const itemOnCookie = {
+        ...cartItemsOnCookie.filter((item) => item.id === product.id)[0],
+      };
+      return {
+        ...itemOnCookie,
+        ...product,
+        size: product.sizeOptions[itemOnCookie.sizeId],
+      };
+    },
+  );
+  cartItemsFromProps.forEach((item) => delete item.sizeId);
 
   return {
     props: {
-      cartItems,
+      cartItemsFromProps,
+      corruptCookie,
     },
   };
 }

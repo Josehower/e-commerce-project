@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps, router }) {
         <link
           href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300&display=swap"
           rel="stylesheet"
-        ></link>
+        />
       </Head>
       <Layout
         isFooterVisible={isFooterVisible(router.asPath)}

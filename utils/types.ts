@@ -8,3 +8,11 @@ export type ProductType = {
   size: string;
   sizeOptions: string[];
 };
+
+export type CookieObjType = {
+  ['id']: number;
+  ['qty']: number;
+  ['sizeId']: number;
+};
+
+export type CookieType = CookieObjType[];

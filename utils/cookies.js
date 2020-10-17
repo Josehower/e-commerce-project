@@ -9,7 +9,7 @@ export function addItemToCart(newItem) {
     sizeId: newItem.sizeOptions.findIndex((option) => newItem.size === option),
   };
 
-  console.log('new testitem cookie-8', cookieItemInfo);
+  console.log('new testitem cookie-8', cookieItemInfo, currentCart);
 
   const indexOfItemToSum = currentCart.findIndex(
     (item) => item.id === cookieItemInfo.id,
@@ -30,7 +30,16 @@ export function updateArticle(newItem, OldItemId) {
     .getJSON('cart')
     .findIndex((item) => item.id === OldItemId);
   const cartCopy = [...cookies.getJSON('cart')];
-  cartCopy[itemIndexOnCookie] = newItem;
+  console.log('update article', cookies.getJSON('cart'));
+  console.log('old item', cartCopy);
+  console.log('newItem', newItem);
+
+  cartCopy[itemIndexOnCookie] = {
+    id: newItem.id,
+    qty: newItem.qty,
+    sizeId: newItem.sizeOptions.findIndex((option) => newItem.size === option),
+  };
+
   cookies.set('cart', cartCopy);
   return cookies.getJSON('cart');
 }
@@ -49,5 +58,24 @@ export function getClientCookies() {
 }
 
 export function deleteCartCookie() {
+  console.log('delete!!!');
   cookies.remove('cart');
+}
+
+export function isObjectCookieNotWellFormated(object, sizeOptRef) {
+  if (!Number.isInteger(object.qty)) {
+    console.log('false qty');
+    return true;
+  }
+  console.log(sizeOptRef, object.sizeId);
+  if (!(Number.isInteger(object.sizeId) && sizeOptRef > object.sizeId)) {
+    console.log('false sizeId');
+    return true;
+  }
+  if (!Number.isInteger(object.id)) {
+    console.log('false id');
+    return true;
+  }
+
+  return false;
 }
