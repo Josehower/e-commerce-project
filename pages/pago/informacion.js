@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import ProgressIndicator from '../../components/ProgressIndicator';
 import { colors } from '../../components/Layout';
 import CallmeBanner from '../../components/CallmeBanner';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 
 const Form = styled.form`
   display: grid;
@@ -17,6 +18,11 @@ const Form = styled.form`
   input {
     width: 90vw;
   }
+`;
+
+const Alert = styled.div`
+  background: red;
+  color: white;
 `;
 
 const NextButton = styled.div`
@@ -43,45 +49,58 @@ const NextButton = styled.div`
 `;
 
 const Informacion = () => {
+  const router = useRouter();
+  const { register, handleSubmit, errors } = useForm();
+
+  function onSubmit(e) {
+    alert(JSON.stringify(e));
+    router.push('/pago/forma-de-pago');
+  }
   return (
     <div>
       <ProgressIndicator activeStep={1} />
       <CallmeBanner />
-      <Form action="">
+      <Form id="my-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Información de envío</h2>
-        <label htmlFor="">
+        <label>
           Nombre: <br />
-          <input type="text" />
+          <input name="name" ref={register({ required: true })} type="text" />
+          {errors.name && <Alert>Nombre es Requerido</Alert>}
         </label>
-        <label htmlFor="">
+        <label>
           Apellido: <br />
-          <input type="text" />
+          <input
+            ref={register({ required: true })}
+            name="apellido"
+            type="text"
+          />
+          {errors.apellido && <Alert>Apellido es Requerido</Alert>}
         </label>
-        <label htmlFor="">
+        <label>
           Ciudad: <br />
-          <input type="text" />
+          <input ref={register} name="Ciudad" type="text" />
         </label>
-        <label htmlFor="">
+        <label>
           Barrio: <br />
-          <input type="text" />
+          <input ref={register} name="Barrio" type="text" />
         </label>
-        <label htmlFor="">
+        <label>
           Dirección: <br />
-          <input type="text" />
+          <input ref={register} name="Dirección" type="text" />
         </label>
-        <label htmlFor="">
+        <label>
           Teléfono: <br />
-          <input type="text" />
+          <input ref={register} name="Teléfono" type="text" />
         </label>
-        <label htmlFor="">
+        <label>
           E-mail:{'  '}
-          <input type="text" />
+          <input ref={register} name="E-mail" type="text" />
         </label>
       </Form>
       <NextButton>
-        <Link href={'/pago/forma-de-pago'}>
-          <button>Siguiente</button>
-        </Link>
+        <button form="my-form" type="submit">
+          Siguiente
+        </button>
         <p>Sólo Hacemos envíos a Colombia</p>
       </NextButton>
     </div>

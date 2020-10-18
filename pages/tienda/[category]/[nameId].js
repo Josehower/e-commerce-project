@@ -1,40 +1,22 @@
 import { useState, useEffect } from 'react';
 import Product from '../../../components/Product';
+import Galery from '../../../components/Galery';
 
 const StoreItem = (props) => {
-  const [avaliableItems, setAvaliableItems] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState();
-
-  function nextItem() {
-    const newIndex =
-      currentIndex === avaliableItems.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-  }
-  function backItem() {
-    const newIndex =
-      currentIndex === 0 ? avaliableItems.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-  }
+  const [itemIdToDisplay, setItemIdToDisplay] = useState();
+  const galeryItems = props.inventory.filter(
+    (item) => item.category === props.category,
+  );
 
   useEffect(() => {
-    setAvaliableItems(
-      props.inventory
-        .filter((item) => item.category === props.category)
-        .map((item) => item.id),
+    const nameIdFromUrl = props.nameId.split('-')[
+      props.nameId.split('-').length - 1
+    ];
+    const [itemToDisplay] = props.inventory.filter(
+      (item) => item.id.toString() === nameIdFromUrl,
     );
-
-    const nameIdToArray = props.nameId.split('-');
-
-    setCurrentIndex(
-      props.inventory
-        .filter((item) => item.category === props.category)
-        .map((item) => item.id)
-        .findIndex(
-          (itemId) =>
-            itemId === parseInt(nameIdToArray[nameIdToArray.length - 1]),
-        ),
-    );
-  }, [props.category, props.nameId, props.inventory]);
+    setItemIdToDisplay(itemToDisplay.id);
+  }, [props.inventory, props.nameId]);
 
   if (!props.categoryList.includes(props.category)) {
     return <div>not a category</div>;
@@ -43,14 +25,11 @@ const StoreItem = (props) => {
   return (
     <>
       <Product
-        productId={avaliableItems[currentIndex]}
+        productId={itemIdToDisplay}
         inventory={props.inventory}
         setCartAmount={props.setCartAmount}
       />
-      <button onClick={backItem}>back</button>
-      <button data-cy="product-button-next" onClick={nextItem}>
-        next
-      </button>
+      <Galery itemsArray={galeryItems} />
     </>
   );
 };
