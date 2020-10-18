@@ -56,19 +56,18 @@ const NuevoProducto = (props: Props) => {
       body: JSON.stringify(FormInfo),
     });
     const data = await response.json();
-    console.log(data);
   }
 
   return (
     <>
       <AdministratorHeader>
         <AdministratorNav>
-          <Div>
+          <Div active={true}>
             <Link href="/administrador/nuevo-producto">
               <a>Nuevo Producto</a>
             </Link>
           </Div>
-          <Div active={true}>
+          <Div>
             <Link href="/administrador/inventario">
               <a>Inventario</a>
             </Link>

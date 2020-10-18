@@ -43,7 +43,6 @@ const Carrito = ({
 
   useEffect(() => {
     setCartItems(cartItemsFromProps ? cartItemsFromProps : []);
-    console.log(corruptCookie);
     if (corruptCookie) {
       deleteCartCookie();
       setCartAmount(0);
@@ -122,7 +121,6 @@ export async function getServerSideProps(context) {
     if (isObjectCookieNotWellFormated(itemOnCookie, sizeOptionsRef)) {
       dataBaseProduct = [];
       corruptCookie = true;
-      console.log(corruptCookie, itemOnCookie, sizeOptionsRef);
     }
   });
 

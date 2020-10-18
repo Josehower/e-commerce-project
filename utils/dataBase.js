@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 const sql = postgres();
 
-console.log(process.dotenv);
-
 export async function getInventory() {
   const products = await sql`
       SELECT * FROM product;

@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if(req.method=== "DELETE"){
 
     const allProducts = await deleteProductById(req.body)
-    console.log(allProducts);
+    allProducts);
     res.statusCode = 200;
     res.json(allProducts);
     return

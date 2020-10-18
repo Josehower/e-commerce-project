@@ -65,12 +65,12 @@ const Inventario = () => {
     <>
       <AdministratorHeader>
         <AdministratorNav>
-          <Div active={true}>
+          <Div>
             <Link href="/administrador/nuevo-producto">
               <a>Nuevo Producto</a>
             </Link>
           </Div>
-          <Div>
+          <Div active={true}>
             <Link href="/administrador/inventario">
               <a>Inventario</a>
             </Link>
