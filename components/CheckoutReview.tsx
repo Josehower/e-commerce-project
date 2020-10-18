@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import { useState } from 'react';
 import Link from 'next/link';
+import { ProductType } from '../utils/types';
+
+type Props = {
+  cartItem: ProductType;
+};
 
 const Img = styled.img`
   width: 30vw;
@@ -24,7 +28,7 @@ const EditLink = styled.a`
   margin: 5px;
 `;
 
-const CheckoutReview = ({ cartItem }) => {
+const CheckoutReview = ({ cartItem }: Props) => {
   return (
     <Card className={'cartCard'}>
       <Img src={cartItem.img} alt="blue-pants" />
