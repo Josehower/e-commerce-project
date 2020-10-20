@@ -47,7 +47,7 @@ const Div = styled.div<StyledProps>`
 `;
 
 const NuevoProducto = (props: Props) => {
-  async function createProduct(FormInfo) {
+  async function createProduct(FormInfo: any) {
     const response = await fetch(`/api/productos/new`, {
       method: 'POST',
       headers: {
@@ -55,7 +55,7 @@ const NuevoProducto = (props: Props) => {
       },
       body: JSON.stringify(FormInfo),
     });
-    const data = await response.json();
+    await response.json();
   }
 
   return (
