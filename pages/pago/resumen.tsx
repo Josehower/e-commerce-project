@@ -100,15 +100,7 @@ const Resumen = ({
       <ProductsContainer data-cy="product-review-container-on-checkout">
         {cartItems?.map((cartItem, index, array) => (
           <Fragment key={`frag${cartItem.id}`}>
-            <CheckoutReview
-              cartItem={cartItem}
-              img={cartItem.img}
-              price={cartItem.price}
-              qty={cartItem.qty}
-              size={cartItem.size}
-              sizeOptions={cartItem.sizeOptions}
-              key={`card${cartItem.id}`}
-            />
+            <CheckoutReview cartItem={cartItem} />
             {array.length - 1 === index ? '' : <Hr key={`hr${cartItem.id}`} />}
           </Fragment>
         ))}

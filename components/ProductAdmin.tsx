@@ -10,8 +10,6 @@ type Props = {
   getFormInfo: Function;
 };
 
-type InputValue = any;
-
 const CategoryInput = styled.input<CategoryInputProps>`
   transition: all 0.4s;
   opacity: ${(props) => (props.visible ? 1 : 0)};
@@ -57,7 +55,6 @@ const ProductAdmin = (props: Props) => {
   }
 
   function sizesInputHandler(e: ChangeEvent<HTMLInputElement>, index: number) {
-    //SOLUCIONAR PROBLEMA CON INDEXES
     const inputValuesCopy = sizeInputValues;
     inputValuesCopy[index] = e.currentTarget.value.toUpperCase();
     setSizeInputValues([...inputValuesCopy]);
