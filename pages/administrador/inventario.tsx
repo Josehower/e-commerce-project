@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled, { StyledProps } from 'styled-components';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { colors } from '../../components/Layout';
+import { ProductType } from '../../utils/types';
 
 const AdministratorHeader = styled.header`
   display: flex;
@@ -23,7 +24,7 @@ const AdministratorNav = styled.nav`
   grid-template-columns: 1fr 1fr;
 `;
 
-const Div = styled.div<StyledProps>`
+const Div = styled.div<StyledProps<any>>`
   display: flex;
   text-align: center;
   align-items: center;
@@ -37,7 +38,7 @@ const Div = styled.div<StyledProps>`
 `;
 
 const Inventario = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   async function deleteUser(id: number) {
     const response = await fetch(`/api/productos/new`, {
