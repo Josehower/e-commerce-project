@@ -95,7 +95,8 @@ export default Carrito;
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getProductsById } = await import('../utils/dataBase');
 
-  const cartCookie: CookieType = nextCookies(context).cart || [];
+  const cartCookie: CookieType =
+    ((nextCookies(context).cart as unknown) as CookieType) || [];
 
   const cartItemsOnCookieIds = cartCookie.map((item) => item.id);
 
