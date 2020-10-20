@@ -12,9 +12,14 @@ import {
 import Link from 'next/link';
 import { colors } from '../components/Layout';
 import cartSum from '../utils/cartSum';
-import { ProductType, CookieType, CookieObjType } from '../utils/types';
+import { ProductType, CookieType } from '../utils/types';
+import { GetServerSidePropsContext } from 'next';
 
-type ProductArray = { cartItems: ProductType[] };
+type CarritoPropsTypes = {
+  cartItemsFromProps: ProductType[];
+  corruptCookie: Boolean;
+  setCartAmount: Function;
+};
 
 const Div = styled.div`
   position: sticky;
@@ -38,8 +43,8 @@ const Carrito = ({
   cartItemsFromProps,
   corruptCookie = false,
   setCartAmount,
-}) => {
-  const [cartItems, setCartItems] = useState([]);
+}: CarritoPropsTypes) => {
+  const [cartItems, setCartItems] = useState<ProductType[]>([]);
 
   useEffect(() => {
     setCartItems(cartItemsFromProps ? cartItemsFromProps : []);
@@ -47,7 +52,7 @@ const Carrito = ({
       deleteCartCookie();
       setCartAmount(0);
     }
-  }, [cartItemsFromProps, corruptCookie]);
+  }, [cartItemsFromProps, corruptCookie, setCartAmount]);
 
   return (
     <>
@@ -73,7 +78,7 @@ const Carrito = ({
       </ProductsWrapper>
       <Div>
         <Link href={'/pago/informacion'}>
-          <button>Comprar</button>
+          <button data-cy="button-buy-cart">Comprar</button>
         </Link>
         <h2>Total:</h2> $
         <NumberFormat
@@ -87,30 +92,18 @@ const Carrito = ({
 };
 export default Carrito;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const { getProductsById } = await import('../utils/dataBase');
 
-  const cartCookie = nextCookies(context).cart || [];
+  const cartCookie: CookieType = nextCookies(context).cart || [];
 
-  //make happy typescript
-  const cart = [...cartCookie].map((obj) => {
-    const objArr = Object.entries(obj);
-    objArr.map(([key, value]: string[]) => [key, parseInt(value, 10)]);
-    const newObj: CookieObjType = { qty: NaN, id: NaN, sizeId: NaN };
-    objArr.forEach(([key, value]) => {
-      newObj[key] = value;
-    });
-    return newObj;
-  });
-
-  const cartItemsOnCookie: CookieType | [] = [...cart];
-  const cartItemsOnCookieIds = cartItemsOnCookie.map((item) => item.id);
+  const cartItemsOnCookieIds = cartCookie.map((item) => item.id);
 
   let dataBaseProduct = await getProductsById(cartItemsOnCookieIds);
 
   let corruptCookie = false;
   //validate the important info from cookie and validate the sizeId from cookie against the database
-  cartItemsOnCookie.forEach((itemOnCookie) => {
+  cartCookie.forEach((itemOnCookie) => {
     const referenceProduct = dataBaseProduct.find(
       (item) => item?.id === itemOnCookie?.id,
     );
@@ -124,18 +117,16 @@ export async function getServerSideProps(context) {
     }
   });
 
-  const cartItemsFromProps: ProductArray | [] = dataBaseProduct.map(
-    (product) => {
-      const itemOnCookie = {
-        ...cartItemsOnCookie.filter((item) => item.id === product.id)[0],
-      };
-      return {
-        ...itemOnCookie,
-        ...product,
-        size: product.sizeOptions[itemOnCookie.sizeId],
-      };
-    },
-  );
+  const cartItemsFromProps: ProductType[] = dataBaseProduct.map((product) => {
+    const itemOnCookie = {
+      ...cartCookie.filter((item) => item.id === product.id)[0],
+    };
+    return {
+      ...itemOnCookie,
+      ...product,
+      size: product.sizeOptions[itemOnCookie.sizeId],
+    };
+  });
   cartItemsFromProps.forEach((item) => delete item.sizeId);
 
   return {

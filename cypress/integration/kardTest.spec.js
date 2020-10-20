@@ -19,7 +19,7 @@ describe('The cart work as expected', () => {
     cy.get('[data-cy=number-cart-nav-web]').contains('1');
     cy.get('[data-cy=number-cart-nav-mobile]').contains('1');
 
-    cy.get('[data-cy=product-button-next ]').click();
+    cy.get('[data-cy=galery-item-id-2]').should('be.visible').click();
     cy.get('[data-cy=button-add-to-cart]').click();
     cy.get('[data-cy=number-cart-nav-web]').contains('2');
     cy.get('[data-cy=number-cart-nav-mobile]').contains('2');

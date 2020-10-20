@@ -11,6 +11,11 @@ const Form = styled.form`
   width: 90vw;
   min-height: 50vw;
 
+  span {
+    font-weight: bold;
+    color: ${colors.secondaryDark};
+  }
+
   h2 {
     margin-bottom: 10px;
   }
@@ -19,15 +24,49 @@ const Form = styled.form`
     width: 90vw;
   }
   button {
-    margin-top: 10px;
+    background: ${colors.secondary};
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid #ccc;
+    margin-bottom: 0;
+    color: ${colors.white};
+    border: solid 1px transparent;
+    border-radius: 3px;
+  }
+  button:focus {
+    outline: none;
+    background: ${colors.secondaryDark};
+  }
+`;
+
+const StyledLink = styled.div`
+  a {
+    text-decoration: none;
+    display: block;
+    background: ${colors.secondary};
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid #ccc;
+    margin-bottom: 5vh;
+    color: ${colors.white};
+    border: solid 1px transparent;
+    width: 90vw;
+    border-radius: 3px;
+  }
+  a:focus,
+  a:active {
+    outline: none;
+    background: ${colors.secondaryDark};
   }
 `;
 
 const NextButton = styled.div`
-  background: ${colors.secondary};
+  background: ${colors.secondaryDark};
   padding: 10px;
   text-align: center;
   border-top: 2px solid #ccc;
+  margin-bottom: 0;
+
   button {
     background: ${colors.primary};
     color: ${colors.white};
@@ -42,97 +81,93 @@ const NextButton = styled.div`
 
   p {
     margin: 8px;
+    margin-bottom: 0;
     color: ${colors.white};
   }
 `;
 
-const RadialLabel = styled.label`
-  width: 90vw;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 3px;
-  padding: 5px;
-  margin: 10px 0;
-  span {
-    text-align: right;
-  }
-  input {
-    width: 10px;
-  }
-`;
-
-const Hr = styled.hr`
-  border-top: 3px solid ${colors.gray};
-`;
-
 const AcordeonBody = styled.div`
-  background: ${colors.gray};
+  background: ${colors.primaryWhite};
   display: grid;
   padding: 8px 0;
   justify-content: center;
   margin-bottom: 20px;
-  input {
-    width: 86vw;
-  }
-  max-height: ${(props) => (props.isAccordionClosed ? '0px' : '100px')};
+  max-height: ${(props) => (props.isAccordionClosed ? '0px' : '270px')};
   ${(props) => (props.isAccordionClosed ? ' padding: 0;' : '')}
   transition: all .3s;
   overflow: hidden;
+
+  span {
+    color: ${colors.black};
+    text-align: center;
+  }
+
+  & > p {
+    padding: 8px;
+    text-align: justify;
+  }
+
+  h2 {
+    text-align: center;
+    color: ${colors.secondaryDark};
+    font-weight: bold;
+  }
 `;
 
 const FormaDePago = () => {
   const [isAccordionBankClosed, setIsAccordionBankClosed] = useState(true);
-  const [isAccordionNequiClosed, setIsAccordionNequiClosed] = useState(true);
 
   return (
     <div>
       <ProgressIndicator activeStep={2} />
       <CallmeBanner />
       <Form onSubmit={(e) => e.preventDefault()}>
-        <h2>Metodo de envío</h2>
-        <RadialLabel>
-          <div> Envío rápido</div>
-          <span>$ 5.000</span>
-          <input type="radio" id="Rapido" name="envio" value="male" />
-        </RadialLabel>
-        <RadialLabel>
-          <div>Envío normal</div>
-          <span>gratis</span>
-          <input type="radio" id="Normal" name="envio" value="female" />
-        </RadialLabel>
-        <Hr />
+        <br /> <br />
         <h2>¿Cómo prefieres pagar?</h2>
-
+        <p>
+          Te hacemos la vida mas facil ofreciendote varias opciones de pago:
+        </p>
+        <br />
+        <br />
         <button
+          data-cy="acordeon-direct-to-bank-account"
           onClick={(e) => setIsAccordionBankClosed(!isAccordionBankClosed)}
         >
           Directo a cuenta Bancaria
         </button>
         <AcordeonBody isAccordionClosed={isAccordionBankClosed}>
-          <label>
-            Nombre: <br />
-            <input type="text" />
-          </label>
+          <p>
+            Luego de que hagas la transferencia, envíanos una foto o el
+            pantallazo con la confirmación de envio, en el asunto de la
+            transferencia debes usar el siguiente <strong>codigo:</strong>
+          </p>
+          <br />
+          <h2>YX23XMXS1</h2>
+          <span>
+            Numero de cuenta Bancolombia: <br /> <br />
+          </span>
+          <h2>12312334</h2>
+          <NextButton>
+            <Link href={'/pago/resumen'}>
+              <button data-cy="button-next-inside-accordeon">Siguiente</button>
+            </Link>
+            <p>Sólo Hacemos envíos a Colombia</p>
+          </NextButton>
         </AcordeonBody>
-
-        <button
-          onClick={(e) => setIsAccordionNequiClosed(!isAccordionNequiClosed)}
-        >
-          Nequi
-        </button>
-        <AcordeonBody isAccordionClosed={isAccordionNequiClosed}>
-          <label>
-            Nequi Pagos: <br />
-            <input type="text" />
-          </label>
-        </AcordeonBody>
+        <br /> <br />
+        <StyledLink>
+          <Link href="/nequi-pagos">
+            <a data-cy="link-nequi-payment-method">Nequi pagos</a>
+          </Link>
+        </StyledLink>
+        <p>
+          <br />
+          si aun tienes dudas puedes llamarnos en nuestros horarios de atención
+          o escribirnos a WhatsApp directamente <span>tel. 301-393-21-65</span>
+          <br />
+          <br />
+        </p>
       </Form>
-      <NextButton>
-        <Link href={'/pago/resumen'}>
-          <button>Siguiente</button>
-        </Link>
-        <p>Sólo Hacemos envíos a Colombia</p>
-      </NextButton>
     </div>
   );
 };

@@ -58,6 +58,10 @@ const Hr = styled.hr`
   border-top: 3px solid ${colors.gray};
 `;
 
+const ProductsContainer = styled.div`
+  margin-bottom: 15vw;
+`;
+
 const Resumen = ({
   cartItemsFromProps,
   corruptCookie = false,
@@ -89,7 +93,7 @@ const Resumen = ({
           prefix={'$ '}
         />
       </StyledNumber>
-      <div>
+      <ProductsContainer data-cy="product-review-container-on-checkout">
         {cartItems?.map((cartItem, index, array) => (
           <Fragment key={`frag${cartItem.id}`}>
             <CheckoutReview
@@ -108,13 +112,14 @@ const Resumen = ({
             {array.length - 1 === index ? '' : <Hr key={`hr${cartItem.id}`} />}
           </Fragment>
         ))}
-      </div>
+      </ProductsContainer>
       <NextButton>
         <Link href={'/compra-exitosa'}>
           <button
+            data-cy="button-buy-review-page"
             onClick={() => {
-              deleteCartCookie();
               setCartAmount(0);
+              deleteCartCookie();
             }}
           >
             Comprar

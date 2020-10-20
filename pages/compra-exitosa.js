@@ -52,7 +52,7 @@ const Contacto = () => {
         pedidos@liamty.com
       </p>
       <Link href="/">
-        <a>volver a la tienda</a>
+        <a data-cy="button-back-to-store">volver a la tienda</a>
       </Link>
     </Div>
   );
