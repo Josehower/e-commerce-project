@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${PORT:-\"3000\"}",
     "migrate": "dotenv ley",
     "test": "dotenv ley down && dotenv ley up",
-    "cy": "cypress open"
+    "cy": "cypress open",
+    "heroku-postbuild": "yarn migrate up && yarn build"
   },
   "dependencies": {
     "@types/cypress": "^1.1.3",
@@ -50,12 +51,12 @@
     "jest": "^26.5.3",
     "typescript": "4.0.3"
   },
-  "cacheDirectories": [
-    ".next/cache"
-  ],
   "jest": {
     "testPathIgnorePatterns": [
       "<rootDir>/cypress"
     ]
-  }
+  },
+  "cacheDirectories": [
+    ".next/cache"
+  ]
 }
