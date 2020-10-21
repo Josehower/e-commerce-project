@@ -20,15 +20,24 @@ const Image = styled.div`
   overflow: hidden;
 `;
 
+function normalizeAccents(string) {
+  return string
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
+
 const Galery = (props) => {
   return (
     <Grid>
       {props.itemsArray.map((item) => (
         <Link
           key={item.id}
-          href={`/tienda/${item.category}/${item.name.replace(' ', '-')}-${
-            item.id
-          }`}
+          href={normalizeAccents(
+            `/tienda/${item.category}/${item.name.replace(' ', '-')}-${
+              item.id
+            }`,
+          )}
         >
           <Image data-cy={`galery-item-id-${item.id}`} src={item.img} />
         </Link>

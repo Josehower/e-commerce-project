@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p ${PORT:-\"3000\"}",
+    "migrateLocal": "dotenv ley",
     "migrate": "ley",
     "test": "dotenv ley down && dotenv ley up",
     "cy": "cypress open",

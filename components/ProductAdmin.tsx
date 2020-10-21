@@ -134,7 +134,14 @@ const ProductAdmin = (props: Props) => {
           <CategoryInput
             visible={isCategoryInputVisible}
             value={category}
-            onChange={(e) => setCategory(e.currentTarget.value.toLowerCase())}
+            onChange={(e) =>
+              setCategory(
+                e.currentTarget.value
+                  .toLowerCase()
+                  .normalize('NFD')
+                  .replace(/[\u0300-\u036f]/g, ''),
+              )
+            }
             type="text"
           />
         </label>

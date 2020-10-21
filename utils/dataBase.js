@@ -13,6 +13,8 @@ const sql =
       postgres({ ssl: { rejectUnauthorized: false } })
     : postgres();
 
+// const sql = postgres();
+
 export async function getInventory() {
   const products = await sql`
       SELECT * FROM product;
