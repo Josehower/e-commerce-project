@@ -19,6 +19,10 @@ type CarritoPropsTypes = {
   setCartAmount: Function;
 };
 
+const Wrapper = styled.div`
+  background: ${colors.white};
+  height: 90vh;
+`;
 const NextButton = styled.div`
   background: ${colors.secondary};
   width: 100vw;
@@ -83,7 +87,7 @@ const Resumen = ({
   }, [cartItemsFromProps, corruptCookie, setCartAmount]);
 
   return (
-    <div>
+    <Wrapper>
       <ProgressIndicator activeStep={3} />
       <StyledNumber>
         <h2>Total:</h2>
@@ -119,7 +123,7 @@ const Resumen = ({
         </Link>
         <p>Sólo Hacemos envíos a Colombia</p>
       </NextButton>
-    </div>
+    </Wrapper>
   );
 };
 

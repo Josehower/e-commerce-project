@@ -37,6 +37,7 @@ const Hr = styled.hr`
 
 const ProductsWrapper = styled.div`
   min-height: 80vh;
+  background: ${colors.white};
 `;
 //setCartAmount come from Layout Component
 const Carrito = ({

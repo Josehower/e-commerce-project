@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { colors } from './Layout';
 
 const StoryContainer = styled.div`
-  height: calc(90vh - 76px);
-  background-color: beige;
-  padding-top: 50px;
+  min-height: calc(80vh - 76px);
+  background-color: ${colors.white};
+  padding-top: 20px;
 `;
 
 const ProfileImage = styled.div`
@@ -19,13 +20,18 @@ const ProfileImage = styled.div`
 
 const Section = styled.section`
   h2 {
-    margin: 5px auto;
+    margin: 20px auto;
     text-align: center;
+    color: ${colors.secondaryDark};
   }
 
   p {
     padding: 20px 5vw;
     margin: 10px;
+    background-color: ${colors.secondary};
+    color: ${colors.white};
+    font-size: 1.2em;
+    border-radius: 3px;
   }
 `;
 
@@ -36,9 +42,11 @@ export default function Story() {
       <Section>
         <h2>Hola, soy Marta</h2>
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita
-          dolorum error ex dignissimos in officia tenetur non voluptas labore
-          incidunt.
+          Soy una orgullosa madre que cree que las mujeres podemos emprender sin
+          dejar de lado nuestra belleza y estilo.
+          <br /> <br />
+          Quiero compartir contigo mi amor por la moda con prendas cómodas
+          seleccionadas para una mujer activa y moderna.
         </p>
         <br />
         <br />

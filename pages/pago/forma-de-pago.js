@@ -5,11 +5,17 @@ import CallmeBanner from '../../components/CallmeBanner';
 import { useState } from 'react';
 import Link from 'next/link';
 
+const BodyMask = styled.div`
+  background: ${colors.white};
+`;
+
 const Form = styled.form`
   display: grid;
-  margin: 10px auto;
+  margin: 0 auto 10px;
   width: 90vw;
   min-height: 50vw;
+  padding-bottom: 50vw;
+  margin-bottom: 0;
 
   span {
     font-weight: bold;
@@ -121,53 +127,58 @@ const FormaDePago = () => {
     <div>
       <ProgressIndicator activeStep={2} />
       <CallmeBanner />
-      <Form onSubmit={(e) => e.preventDefault()}>
-        <br /> <br />
-        <h2>¿Cómo prefieres pagar?</h2>
-        <p>
-          Te hacemos la vida mas facil ofreciendote varias opciones de pago:
-        </p>
-        <br />
-        <br />
-        <button
-          data-cy="acordeon-direct-to-bank-account"
-          onClick={(e) => setIsAccordionBankClosed(!isAccordionBankClosed)}
-        >
-          Directo a cuenta Bancaria
-        </button>
-        <AcordeonBody isAccordionClosed={isAccordionBankClosed}>
+      <BodyMask>
+        <Form onSubmit={(e) => e.preventDefault()}>
+          <br /> <br />
+          <h2>¿Cómo prefieres pagar?</h2>
           <p>
-            Luego de que hagas la transferencia, envíanos una foto o el
-            pantallazo con la confirmación de envio, en el asunto de la
-            transferencia debes usar el siguiente <strong>codigo:</strong>
+            Te hacemos la vida mas facil ofreciendote varias opciones de pago:
           </p>
           <br />
-          <h2>YX23XMXS1</h2>
-          <span>
-            Numero de cuenta Bancolombia: <br /> <br />
-          </span>
-          <h2>12312334</h2>
-          <NextButton>
-            <Link href={'/pago/resumen'}>
-              <button data-cy="button-next-inside-accordeon">Siguiente</button>
+          <br />
+          <button
+            data-cy="acordeon-direct-to-bank-account"
+            onClick={(e) => setIsAccordionBankClosed(!isAccordionBankClosed)}
+          >
+            Directo a cuenta Bancaria
+          </button>
+          <AcordeonBody isAccordionClosed={isAccordionBankClosed}>
+            <p>
+              Luego de que hagas la transferencia, envíanos una foto o el
+              pantallazo con la confirmación de envio, en el asunto de la
+              transferencia debes usar el siguiente <strong>codigo:</strong>
+            </p>
+            <br />
+            <h2>YX23XMXS1</h2>
+            <span>
+              Numero de cuenta Bancolombia: <br /> <br />
+            </span>
+            <h2>12312334</h2>
+            <NextButton>
+              <Link href={'/pago/resumen'}>
+                <button data-cy="button-next-inside-accordeon">
+                  Siguiente
+                </button>
+              </Link>
+              <p>Sólo Hacemos envíos a Colombia</p>
+            </NextButton>
+          </AcordeonBody>
+          <br /> <br />
+          <StyledLink>
+            <Link href="/nequi-pagos">
+              <a data-cy="link-nequi-payment-method">Nequi pagos</a>
             </Link>
-            <p>Sólo Hacemos envíos a Colombia</p>
-          </NextButton>
-        </AcordeonBody>
-        <br /> <br />
-        <StyledLink>
-          <Link href="/nequi-pagos">
-            <a data-cy="link-nequi-payment-method">Nequi pagos</a>
-          </Link>
-        </StyledLink>
-        <p>
-          <br />
-          si aun tienes dudas puedes llamarnos en nuestros horarios de atención
-          o escribirnos a WhatsApp directamente <span>tel. 301-393-21-65</span>
-          <br />
-          <br />
-        </p>
-      </Form>
+          </StyledLink>
+          <p>
+            <br />
+            si aun tienes dudas puedes llamarnos en nuestros horarios de
+            atención o escribirnos a WhatsApp directamente{' '}
+            <span>tel. 301-393-21-65</span>
+            <br />
+            <br />
+          </p>
+        </Form>
+      </BodyMask>
     </div>
   );
 };

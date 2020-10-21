@@ -30,8 +30,8 @@ describe('The cart work as expected', () => {
       .should('have.length', 3);
     // .then((sometext) => cy.log(sometext));
 
-    cy.contains('blue pants');
-    cy.contains('gray pants');
+    cy.contains('Buso botón');
+    cy.contains('Buso clásico');
 
     cy.get('[data-cy="button-delete-item-from-cart-id-1"]').click();
     cy.get('[data-cy="product-wrapper-on-cart"]')

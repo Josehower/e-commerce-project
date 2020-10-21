@@ -5,8 +5,10 @@ import LinkButton from './LinkButton';
 
 export const colors = {
   primary: '#C179EB',
-  primaryLight: '#E3C7F1',
+  primaryLight: '#D099F0',
   primaryWhite: '#E3C7F1',
+  primaryDark: '#774296',
+  secondaryLight: '#B6BDED',
   secondary: '#818FEB',
   secondaryDark: '#5662B1',
   white: '#FCF7FF',

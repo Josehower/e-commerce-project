@@ -116,7 +116,7 @@ box-sizing: border-box;
 }
 
 body {
-    background: ${colors.white};
+    background: ${colors.secondary};
     font-family: 'Sansita Swashed', cursive;
 }
 

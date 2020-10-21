@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import { colors } from './Layout';
 
 const Grid = styled.div`
   width: 100vw;
@@ -10,7 +11,7 @@ const Grid = styled.div`
   grid-auto-rows: 30vw;
   justify-content: space-around;
   align-content: space-around;
-  background: #777;
+  background: ${colors.secondaryLight};
 `;
 
 const Image = styled.div`

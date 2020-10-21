@@ -12,13 +12,20 @@ const eMailRegex = new RegExp(
 );
 /*eslint-enable */
 
+const BodyMask = styled.div`
+  background: ${colors.white};
+`;
+
 const Form = styled.form`
   display: grid;
-  margin: 10px auto;
+  margin: 0 auto 10px;
   width: 90vw;
   min-height: 50vw;
+  padding-bottom: 3vw;
+  margin-bottom: 0;
 
   h2 {
+    padding-top: 5px;
     margin-bottom: 10px;
   }
 
@@ -84,99 +91,103 @@ const Informacion = () => {
     <div>
       <ProgressIndicator activeStep={1} />
       <CallmeBanner />
-      <Form id="my-form" onSubmit={handleSubmit(onSubmit)}>
-        {Object.keys(errors).length !== 0 && <Alert>ups! algo salio mal</Alert>}
-        <h2>Información de envío</h2>
-        <label>
-          Nombre: <br />
-          <input
-            data-cy="input-address-info-form-field-name"
-            name="name"
-            onChange={(e) => setFirstName(e.target.value)}
-            ref={register({ required: true })}
-            type="text"
-            value={firstName}
-          />
-          {errors.name && <Alert>Nombre es Requerido</Alert>}
-        </label>
-        <label>
-          Apellido: <br />
-          <input
-            data-cy="input-address-info-form-field-lastName"
-            name="lastName"
-            value={lastName}
-            ref={register({ required: true })}
-            type="text"
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          {errors.lastName && <Alert>Apellido es Requerido</Alert>}
-        </label>
-        <label>
-          Ciudad: <br />
-          <input
-            data-cy="input-address-info-form-field-city"
-            name="city"
-            ref={register({ required: true })}
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-          {errors.city && <Alert>Ciudad es Requerido</Alert>}
-        </label>
-        <label>
-          Barrio: <br />
-          <input
-            data-cy="input-address-info-form-field-district"
-            name="district"
-            value={district}
-            ref={register({ required: true })}
-            type="text"
-            onChange={(e) => setDistrict(e.target.value)}
-          />
-          {errors.district && <Alert>Barrio es Requerido</Alert>}
-        </label>
-        <label>
-          Dirección: <br />
-          <input
-            data-cy="input-address-info-form-field-address"
-            name="address"
-            value={address}
-            ref={register({ required: true })}
-            type="text"
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          {errors.address && <Alert>Dirección es Requerido</Alert>}
-        </label>
-        <label>
-          Teléfono: <br />
-          <input
-            data-cy="input-address-info-form-field-phone"
-            name="phone"
-            value={phone}
-            ref={register({ required: true })}
-            type="tel"
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          {errors.phone && <Alert>Teléfono es Requerido</Alert>}
-        </label>
-        <label>
-          E-mail:
-          <input
-            data-cy="input-address-info-form-field-email"
-            name="email"
-            value={email}
-            ref={register({ required: true, pattern: eMailRegex })}
-            type="text"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          {errors.email && errors.email.type === 'required' && (
-            <Alert>E-mail es Requerido</Alert>
+      <BodyMask>
+        <Form id="my-form" onSubmit={handleSubmit(onSubmit)}>
+          {Object.keys(errors).length !== 0 && (
+            <Alert>ups! algo salio mal</Alert>
           )}
-          {errors.email && errors.email.type === 'pattern' && (
-            <Alert>ups! esto no es un e-mail valido</Alert>
-          )}
-        </label>
-      </Form>
+          <h2>Información de envío</h2>
+          <label>
+            Nombre: <br />
+            <input
+              data-cy="input-address-info-form-field-name"
+              name="name"
+              onChange={(e) => setFirstName(e.target.value)}
+              ref={register({ required: true })}
+              type="text"
+              value={firstName}
+            />
+            {errors.name && <Alert>Nombre es Requerido</Alert>}
+          </label>
+          <label>
+            Apellido: <br />
+            <input
+              data-cy="input-address-info-form-field-lastName"
+              name="lastName"
+              value={lastName}
+              ref={register({ required: true })}
+              type="text"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            {errors.lastName && <Alert>Apellido es Requerido</Alert>}
+          </label>
+          <label>
+            Ciudad: <br />
+            <input
+              data-cy="input-address-info-form-field-city"
+              name="city"
+              ref={register({ required: true })}
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+            {errors.city && <Alert>Ciudad es Requerido</Alert>}
+          </label>
+          <label>
+            Barrio: <br />
+            <input
+              data-cy="input-address-info-form-field-district"
+              name="district"
+              value={district}
+              ref={register({ required: true })}
+              type="text"
+              onChange={(e) => setDistrict(e.target.value)}
+            />
+            {errors.district && <Alert>Barrio es Requerido</Alert>}
+          </label>
+          <label>
+            Dirección: <br />
+            <input
+              data-cy="input-address-info-form-field-address"
+              name="address"
+              value={address}
+              ref={register({ required: true })}
+              type="text"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            {errors.address && <Alert>Dirección es Requerido</Alert>}
+          </label>
+          <label>
+            Teléfono: <br />
+            <input
+              data-cy="input-address-info-form-field-phone"
+              name="phone"
+              value={phone}
+              ref={register({ required: true })}
+              type="tel"
+              onChange={(e) => setPhone(e.target.value)}
+            />
+            {errors.phone && <Alert>Teléfono es Requerido</Alert>}
+          </label>
+          <label>
+            E-mail:
+            <input
+              data-cy="input-address-info-form-field-email"
+              name="email"
+              value={email}
+              ref={register({ required: true, pattern: eMailRegex })}
+              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {errors.email && errors.email.type === 'required' && (
+              <Alert>E-mail es Requerido</Alert>
+            )}
+            {errors.email && errors.email.type === 'pattern' && (
+              <Alert>ups! esto no es un e-mail valido</Alert>
+            )}
+          </label>
+        </Form>
+      </BodyMask>
       <NextButton>
         <button
           data-cy="info-form-field-next-button"

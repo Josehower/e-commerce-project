@@ -1,20 +1,26 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import Galery from '../../components/Galery';
+import { colors } from '../../components/Layout';
 
 const H1 = styled.h1`
-  margin: 5px 0;
+  padding: 10px 0 5px 5vw;
+  font-size: 1.5em;
+  text-transform: capitalize;
+`;
+const Wrapper = styled.div`
+  background-color: ${colors.white};
 `;
 
 const tienda = memo(({ inventory, categoryList }) => {
   return categoryList.map((category) => {
     return (
-      <div key={category}>
+      <Wrapper key={category}>
         <H1>{category}</H1>
         <Galery
           itemsArray={inventory.filter((item) => item.category === category)}
         />
-      </div>
+      </Wrapper>
     );
   });
 });

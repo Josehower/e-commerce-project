@@ -7,7 +7,7 @@ const CallMeBanner = styled.section`
   line-height: 1.5rem;
   background: ${colors.primaryWhite};
   color: ${colors.whitblacke};
-  margin-bottom: 8px;
+  margin-bottom: 0;
 
   div {
     display: flex;
