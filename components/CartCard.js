@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import { useState } from 'react';
+import { colors } from './Layout';
 
 const Img = styled.img`
   width: 30vw;
@@ -17,6 +18,17 @@ const Card = styled.div`
 const TextCard = styled.div`
   display: grid;
   gap: 0.5em;
+
+  button {
+    background-color: ${colors.secondaryDark};
+    color: ${colors.white};
+    border: none;
+    border-radius: 3px;
+
+    &:active {
+      transform: scale(1.05);
+    }
+  }
 `;
 
 const CartCard = (props) => {
@@ -82,7 +94,7 @@ const CartCard = (props) => {
           data-cy={`button-delete-item-from-cart-id-${cartItem.id}`}
           onClick={deleteCartItem}
         >
-          Remove
+          Remover
         </button>
       </TextCard>
     </Card>

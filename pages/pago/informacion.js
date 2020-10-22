@@ -90,7 +90,7 @@ const Informacion = () => {
   return (
     <div>
       <ProgressIndicator activeStep={1} />
-      <CallmeBanner />
+      <CallmeBanner text="También puedes hacer tu pedido por" />
       <BodyMask>
         <Form id="my-form" onSubmit={handleSubmit(onSubmit)}>
           {Object.keys(errors).length !== 0 && (

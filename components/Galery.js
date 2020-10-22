@@ -4,11 +4,11 @@ import { colors } from './Layout';
 
 const Grid = styled.div`
   width: 100vw;
-  padding: 10px;
+  padding: 5px;
   display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(3, 30vw);
-  grid-auto-rows: 30vw;
+  gap: 2px;
+  grid-template-columns: repeat(3, 33vw);
+  grid-auto-rows: 33vw;
   justify-content: space-around;
   align-content: space-around;
   background: ${colors.secondaryLight};
@@ -19,6 +19,7 @@ const Image = styled.div`
   background: url(${(props) => props.src}) center;
   background-size: cover;
   overflow: hidden;
+  border-radius: 5px;
 `;
 
 function normalizeAccents(string) {

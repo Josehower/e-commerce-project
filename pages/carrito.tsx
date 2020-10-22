@@ -30,6 +30,27 @@ const Div = styled.div`
   justify-content: space-around;
   border-top: 3px black solid;
   padding: 5vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  color: ${colors.secondaryDark};
+  font-weight: bolder;
+  font-size: 1.2em;
+  text-align: center;
+
+  button {
+    grid-column: span 2;
+    background-color: ${colors.primary};
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    color: ${colors.white};
+    font-family: 'Sansita Swashed', cursive;
+    font-weight: bolder;
+    font-size: 1.4em;
+    text-shadow: 1px 1px ${colors.black};
+    box-shadow: 2px 2px ${colors.secondaryDark};
+  }
 `;
 const Hr = styled.hr`
   border-top: 3px solid ${colors.gray};
@@ -78,15 +99,18 @@ const Carrito = ({
         ))}
       </ProductsWrapper>
       <Div>
+        <h2>Total:</h2>
+        <div>
+          $
+          <NumberFormat
+            value={cartSum(cartItems)}
+            displayType={'text'}
+            thousandSeparator={true}
+          />
+        </div>
         <Link href={'/pago/informacion'}>
           <button data-cy="button-buy-cart">Comprar</button>
         </Link>
-        <h2>Total:</h2> $
-        <NumberFormat
-          value={cartSum(cartItems)}
-          displayType={'text'}
-          thousandSeparator={true}
-        />
       </Div>
     </>
   );

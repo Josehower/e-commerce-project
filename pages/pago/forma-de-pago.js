@@ -126,7 +126,7 @@ const FormaDePago = () => {
   return (
     <div>
       <ProgressIndicator activeStep={2} />
-      <CallmeBanner />
+      <CallmeBanner text="También puedes hacer tu pedido por" />
       <BodyMask>
         <Form onSubmit={(e) => e.preventDefault()}>
           <br /> <br />

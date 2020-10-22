@@ -72,7 +72,7 @@ export default memo(function Home({ inventory }) {
       <Head>
         <title>liamty.com</title>
       </Head>
-      <HeroImage></HeroImage>
+      <HeroImage />
       <TextoBanner>
         Bienvenida a &nbsp;<span>Liamty</span>&nbsp; tu nueva tienda online
         favorita
@@ -83,18 +83,18 @@ export default memo(function Home({ inventory }) {
         </Link>
       </ButtonContainer>
       <Section>
-        <h2>Descuentos por temporada</h2>
+        <img src="/50-off.jpeg" alt="" />
+        <br />
+        <br />
+        <h1>Descubre nuestras ofertas</h1>
         <br />
         <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita
-          dolorum error ex dignissimos in officia tenetur non voluptas labore
-          incidunt.
+          Productos de la mejor calidad, al mejor precio, seleccionados para una
+          mujer moderna.
         </p>
-        <br />
-        <img src="/50-off.jpeg" alt="" />
       </Section>
       <Galery itemsArray={inventory} />
-      <Section></Section>
+      <Section />
     </>
   );
 });

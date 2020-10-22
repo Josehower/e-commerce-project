@@ -35,10 +35,10 @@ const CallMeBanner = styled.section`
   }
 `;
 
-const CallmeBanner = () => {
+const CallmeBanner = (props) => {
   return (
     <CallMeBanner>
-      También puedes hacer tu pedido por <br /> teléfono o WhatsApp:
+      {props.text} <br /> teléfono o WhatsApp:
       <div>
         <img src="/whatsAppLogo.svg" alt="" />
         <a href="tel:3013932165">301-393-21-65</a>
