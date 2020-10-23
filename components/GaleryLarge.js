@@ -67,7 +67,10 @@ const GaleryLarge = (props) => {
                 }`,
               )}
             >
-              <Image data-cy={`galery-item-id-${item.id}`} src={item.img2} />
+              <Image
+                data-cy={`galery-large-item-id-${item.id}`}
+                src={item.img2}
+              />
             </Link>
             <h2>
               ${' '}
