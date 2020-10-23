@@ -14,7 +14,7 @@ test('Add the cookie cartItem to Cookie', () => {
 test('remove the cookie cartItem to Cookie', () => {
   const productIdToremove: number = productsTestExample[0].id;
 
-  deleteItemFromCart(productIdToremove);
+  deleteItemFromCart(productIdToremove, productsTestExample);
 
   expect(cookies.getJSON('cart')).toStrictEqual([]);
 });
