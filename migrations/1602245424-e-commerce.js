@@ -1,10 +1,11 @@
 const inventory = [
   {
-    img: '/productos-liamty/buso-botón.jpg',
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
     name: 'Buso botón',
     category: 'busos',
+    img: '/productos-liamty/buso-botón.jpg',
+    img2: '/images-large/buso-botón-large.jpg',
   },
   {
     name: 'Buso clásico',
@@ -12,6 +13,7 @@ const inventory = [
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-clasico.jpg',
+    img2: '/images-large/buso-clasico-large.jpg',
   },
   {
     name: 'Buso cuadros',
@@ -19,6 +21,7 @@ const inventory = [
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-cuadros.jpg',
+    img2: '/images-large/buso-cuadros-large.jpg',
   },
   {
     name: 'Buso hombro',
@@ -26,6 +29,7 @@ const inventory = [
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-hombro.jpg',
+    img2: '/images-large/buso-hombro-large.jpg',
   },
   {
     name: 'Buso maya',
@@ -33,6 +37,7 @@ const inventory = [
     price: 60000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-maya.jpg',
+    img2: '/images-large/buso-maya-large.jpg',
   },
   {
     name: 'Buso trenza',
@@ -40,6 +45,7 @@ const inventory = [
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-trenza.jpg',
+    img2: '/images-large/buso-trenza-large.jpg',
   },
   {
     name: 'Gabán botón',
@@ -47,6 +53,7 @@ const inventory = [
     price: 65000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/gabán-botón.jpg',
+    img2: '/images-large/gabán-botón-large.jpg',
   },
   {
     name: 'Gabán combinado',
@@ -54,6 +61,7 @@ const inventory = [
     price: 65000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/gabán-combinado.jpg',
+    img2: '/images-large/gabán-combinado-large.jpg',
   },
   {
     name: 'Vestido unicolor',
@@ -61,6 +69,7 @@ const inventory = [
     price: 60000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/vestido-unicolor.jpg',
+    img2: '/images-large/vestido-unicolor-large.jpg',
   },
   {
     name: 'Gabán kimono',
@@ -68,6 +77,7 @@ const inventory = [
     price: 65000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/gabán-kimono.jpg',
+    img2: '/images-large/gabán-kimono-large.jpg',
   },
   {
     name: 'Vestido botón',
@@ -75,6 +85,7 @@ const inventory = [
     price: 80000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/vestido-botón.jpg',
+    img2: '/images-large/vestido-botón-large.jpg',
   },
   {
     name: 'Vestido raya',
@@ -82,6 +93,7 @@ const inventory = [
     price: 75000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/vestido-raya.jpg',
+    img2: '/images-large/vestido-raya-large.jpg',
   },
   {
     name: 'Buso cuello caído',
@@ -89,6 +101,7 @@ const inventory = [
     price: 60000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-cuello-caído.jpg',
+    img2: '/images-large/buso-cuello-caído-large.jpg',
   },
   {
     name: 'Buso cuello tortuga',
@@ -96,6 +109,7 @@ const inventory = [
     price: 50000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/buso-cuello-tortuga.jpg',
+    img2: '/images-large/buso-cuello-tortuga-large.jpg',
   },
   {
     name: 'Vestido cuello caído',
@@ -103,6 +117,7 @@ const inventory = [
     price: 75000,
     sizeOptions: ['TALLA UNICA'],
     img: '/productos-liamty/vestido-cuello-caído.jpg',
+    img2: '/images-large/vestido-cuello-caído-large.jpg',
   },
 ];
 
@@ -119,7 +134,14 @@ const sizeOptionsSet = [...new Set(sizeOptionsArray)].map((option) => {
 
 exports.up = async (sql) => {
   await sql`
-	INSERT INTO product ${sql(inventory, 'name', 'category', 'price', 'img')}`;
+	INSERT INTO product ${sql(
+    inventory,
+    'name',
+    'category',
+    'price',
+    'img',
+    'img2',
+  )}`;
 
   await sql`
 	INSERT INTO size_options ${sql(sizeOptionsSet, 'size_option_name')}`;

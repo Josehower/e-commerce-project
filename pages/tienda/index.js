@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import Galery from '../../components/Galery';
+import GaleryLarge from '../../components/GaleryLarge';
 import { colors } from '../../components/Layout';
 
 const H1 = styled.h1`
@@ -17,7 +17,7 @@ const tienda = memo(({ inventory, categoryList }) => {
     return (
       <Wrapper key={category}>
         <H1>{category}</H1>
-        <Galery
+        <GaleryLarge
           itemsArray={inventory.filter((item) => item.category === category)}
         />
       </Wrapper>

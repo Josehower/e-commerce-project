@@ -10,7 +10,7 @@
     "migrate": "ley",
     "test": "dotenv ley down && dotenv ley up",
     "cy": "cypress open",
-    "heroku-postbuild": "yarn migrate up && yarn build"
+    "heroku-postbuild": "yarn migrate down && yarn migrate down && yarn migrate up && yarn build"
   },
   "dependencies": {
     "@types/cypress": "^1.1.3",

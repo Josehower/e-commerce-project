@@ -116,9 +116,9 @@ export async function deleteProductById(productId) {
 }
 
 export async function getProductsById(productsId) {
-  const products = await productsId.map(async (product) => {
-    const productPrice = await sql`
-    SELECT * FROM product where id = ${product};`;
+  const products = await productsId.map(async (singleProductId) => {
+    const rawProductObject = await sql`
+    SELECT * FROM product where id = ${singleProductId};`;
 
     const sizeOptions = await sql`
     SELECT product.id, size_options.size_option_name
