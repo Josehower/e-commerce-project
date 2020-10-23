@@ -1,8 +1,9 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Galery from '../components/Galery';
+import GaleryLarge from '../components/GaleryLarge';
 import { colors } from '../components/Layout';
 
 const HeroImage = styled.div`
@@ -66,7 +67,15 @@ const Section = styled.section`
   }
 `;
 
-export default memo(function Home({ inventory }) {
+export default memo(function Home({ squareGaleryProps, largeGaleryProps }) {
+  const [squareGalery, setSquareGalery] = useState([]);
+  const [largeGalery, setLargeGalery] = useState([]);
+
+  useEffect(() => {
+    setSquareGalery(squareGaleryProps);
+    setLargeGalery(largeGaleryProps);
+  }, [largeGaleryProps, squareGaleryProps]);
+
   return (
     <>
       <Head>
@@ -93,7 +102,8 @@ export default memo(function Home({ inventory }) {
           mujer moderna.
         </p>
       </Section>
-      <Galery itemsArray={inventory} />
+      <Galery itemsArray={squareGalery} />
+      <GaleryLarge itemsArray={largeGalery} />
       <Section />
     </>
   );
@@ -104,9 +114,41 @@ export async function getServerSideProps() {
 
   const inventory = await getInventory();
 
+  const choosenNumbers = [];
+
+  function randomInventoryIndex() {
+    const randomIndex = Math.floor(Math.random() * inventory.length);
+
+    if (choosenNumbers.includes(randomIndex)) {
+      return randomInventoryIndex();
+    } else {
+      choosenNumbers.push(randomIndex);
+
+      return randomIndex;
+    }
+  }
+
+  const squareGaleryProps = [
+    randomInventoryIndex(),
+    randomInventoryIndex(),
+    randomInventoryIndex(),
+    randomInventoryIndex(),
+    randomInventoryIndex(),
+    randomInventoryIndex(),
+  ].map((index) => {
+    return { ...inventory[index] };
+  });
+
+  const largeGaleryProps = [randomInventoryIndex(), randomInventoryIndex()].map(
+    (index2) => {
+      return { ...inventory[index2] };
+    },
+  );
+
   return {
     props: {
-      inventory,
+      squareGaleryProps,
+      largeGaleryProps,
     },
   };
 }

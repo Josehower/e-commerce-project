@@ -22,17 +22,17 @@ const Image = styled.div`
   border-radius: 5px;
 `;
 
-function normalizeAccents(string) {
-  return string
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-}
-
 const Galery = (props) => {
+  function normalizeAccents(string) {
+    return string
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
   return (
     <Grid>
-      {props.itemsArray.map((item) => (
+      {props?.itemsArray?.map((item) => (
         <Link
           key={item.id}
           href={normalizeAccents(

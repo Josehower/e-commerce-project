@@ -56,11 +56,10 @@ function normalizeAccents(string) {
 const GaleryLarge = (props) => {
   return (
     <Grid>
-      {props.itemsArray.map((item) => {
+      {props?.itemsArray?.map((item) => {
         return (
-          <Wrapper>
+          <Wrapper key={`${item.id}-wrapper`}>
             <Link
-              key={item.id}
               href={normalizeAccents(
                 `/tienda/${item.category}/${item.name.replace(' ', '-')}-${
                   item.id
@@ -68,11 +67,12 @@ const GaleryLarge = (props) => {
               )}
             >
               <Image
+                key={`${item.id}-largeImage`}
                 data-cy={`galery-large-item-id-${item.id}`}
                 src={item.img2}
               />
             </Link>
-            <h2>
+            <h2 key={`${item.id}-h2`}>
               ${' '}
               <NumberFormat
                 value={item.price}
@@ -80,7 +80,7 @@ const GaleryLarge = (props) => {
                 thousandSeparator={true}
               />
             </h2>
-            <h3>{item.name}</h3>
+            <h3 key={`${item.id}-h3`}>{item.name}</h3>
             <br />
           </Wrapper>
         );
