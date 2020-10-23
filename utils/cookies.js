@@ -23,29 +23,45 @@ export function addItemToCart(newItem) {
   cookies.set('cart', JSON.stringify([...currentCart, cookieItemInfo]));
 }
 
-export function updateArticle(newItem, OldItemId) {
+export function updateArticle(newItem, OldItemId, fullItems) {
   const itemIndexOnCookie = cookies
     .getJSON('cart')
     .findIndex((item) => item.id === OldItemId);
+
   const cartCopy = [...cookies.getJSON('cart')];
 
-  cartCopy[itemIndexOnCookie] = {
+  const newCookieItem = {
     id: newItem.id,
     qty: newItem.qty,
     sizeId: newItem.sizeOptions.findIndex((option) => newItem.size === option),
   };
 
+  cartCopy[itemIndexOnCookie] = newCookieItem;
+
+  const newFullItem = {
+    ...fullItems[itemIndexOnCookie],
+    id: newItem.id,
+    qty: newItem.qty,
+    size: fullItems[itemIndexOnCookie].sizeOptions[newCookieItem.sizeId],
+  };
+  const fullItemsCopy = [...fullItems];
+
+  fullItemsCopy[itemIndexOnCookie] = newFullItem;
+
   cookies.set('cart', cartCopy);
-  return cookies.getJSON('cart');
+
+  return fullItemsCopy;
 }
 
-export function deleteItemFromCart(itemId) {
+export function deleteItemFromCart(itemId, fullItems) {
   const updatedCookie = cookies
     .getJSON('cart')
     .filter((item) => item.id !== itemId);
 
+  const updatedItems = fullItems.filter((item) => item.id !== itemId);
+
   cookies.set('cart', updatedCookie);
-  return cookies.getJSON('cart');
+  return updatedItems;
 }
 
 export function getClientCookies() {

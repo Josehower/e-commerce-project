@@ -15,6 +15,7 @@ const sql =
 
 // const sql = postgres();
 
+//Return a full inventory array of objects whit all the objects on inventory
 export async function getInventory() {
   const products = await sql`
       SELECT * FROM product;
@@ -75,11 +76,11 @@ export async function createNewProduct(newProduct) {
   const sizesIdFromDb = await sql`
   SELECT size_option_name FROM size_options;`;
 
-  const optionsObj = newProduct.sizeOptions.map((opt) => {
+  const sizeOptionsObj = newProduct.sizeOptions.map((opt) => {
     return { size_option_name: opt };
   });
 
-  const reduced = sizesIdFromDb.reduce((acc, obj) => {
+  const sizesReduced = sizesIdFromDb.reduce((acc, obj) => {
     if (
       acc.map((item) => item.size_option_name).includes(obj.size_option_name)
     ) {
@@ -88,11 +89,11 @@ export async function createNewProduct(newProduct) {
       );
     }
     return acc;
-  }, optionsObj);
+  }, sizeOptionsObj);
 
-  if (reduced.length !== 0) {
+  if (sizesReduced.length !== 0) {
     await sql`
-  INSERT INTO size_options ${sql(reduced, 'size_option_name')}`;
+  INSERT INTO size_options ${sql(sizesReduced, 'size_option_name')}`;
   }
 
   for (const size of newProduct.sizeOptions) {
@@ -125,7 +126,7 @@ export async function getProductsById(productsId) {
       JOIN product_sizes
         ON product.id = product_sizes.product_id
       JOIN size_options
-        ON size_options.id = product_sizes.size_id where product.id = ${product};`;
+        ON size_options.id = product_sizes.size_id where product.id = ${singleProductId};`;
 
     const sizeOptionsCamel = sizeOptions.map((obj) => {
       return {
@@ -148,13 +149,13 @@ export async function getProductsById(productsId) {
       {},
     );
 
-    return productPrice.map((item) => {
+    return rawProductObject.map((basicProps) => {
       return {
-        ...item,
-        sizeOptions: sizeOptionsReduced[item.id],
+        ...basicProps,
+        sizeOptions: sizeOptionsReduced[basicProps.id],
       };
     });
   });
-
+  //TODO: COMENT the return final data structure returned
   return Promise.all(products).then((res) => res.map((product) => product[0]));
 }

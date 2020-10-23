@@ -154,7 +154,6 @@ INSERT INTO product_sizes VALUES (${data[0]}, ${sizeId})`;
 };
 
 exports.down = async (sql) => {
-  // await sql`DELETE FROM product;`;
   for (const item of inventory) {
     await sql`
     DELETE FROM product_sizes;

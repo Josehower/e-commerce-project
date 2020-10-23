@@ -38,12 +38,16 @@ const CartCard = (props) => {
     const updatedItem = { ...cartItem };
     updatedItem[keyName] = newValue;
     setCartItem(updatedItem);
-    const updatedCart = props.updateArticle(updatedItem, props.cartItem.id);
+    const updatedCart = props.updateArticle(
+      updatedItem,
+      props.cartItem.id,
+      props.cartItems,
+    );
     props.setCartItems(updatedCart);
   }
 
   function deleteCartItem() {
-    const updatedCart = props.deleteItemFromCart(cartItem.id);
+    const updatedCart = props.deleteItemFromCart(cartItem.id, props.cartItems);
     props.setCartItems(updatedCart);
     props.setCartAmount(updatedCart.length);
   }

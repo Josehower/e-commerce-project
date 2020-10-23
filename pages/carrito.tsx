@@ -67,9 +67,15 @@ const Carrito = ({
   setCartAmount,
 }: CarritoPropsTypes) => {
   const [cartItems, setCartItems] = useState<ProductType[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    setTotalPrice(cartSum(cartItems));
+  }, [cartItems]);
 
   useEffect(() => {
     setCartItems(cartItemsFromProps ? cartItemsFromProps : []);
+    setTotalPrice(cartSum(cartItemsFromProps ? cartItemsFromProps : []));
     if (corruptCookie) {
       deleteCartCookie();
       setCartAmount(0);
@@ -86,12 +92,8 @@ const Carrito = ({
               cartItem={cartItem}
               updateArticle={updateArticle}
               deleteItemFromCart={deleteItemFromCart}
+              cartItems={cartItems}
               setCartItems={setCartItems}
-              img={cartItem.img}
-              price={cartItem.price}
-              qty={cartItem.qty}
-              size={cartItem.size}
-              sizeOptions={cartItem.sizeOptions}
               key={`card${cartItem.id}`}
             />
             {array.length - 1 === index ? '' : <Hr key={`hr${cartItem.id}`} />}
@@ -103,7 +105,7 @@ const Carrito = ({
         <div>
           $
           <NumberFormat
-            value={cartSum(cartItems)}
+            value={totalPrice}
             displayType={'text'}
             thousandSeparator={true}
           />
