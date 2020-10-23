@@ -70,7 +70,14 @@ export async function getCategories() {
 
 export async function createNewProduct(newProduct) {
   const product = await sql`
-  INSERT INTO product ${sql(newProduct, 'name', 'category', 'price', 'img')}
+  INSERT INTO product ${sql(
+    newProduct,
+    'name',
+    'category',
+    'price',
+    'img',
+    'img2',
+  )}
   RETURNING * ;`;
 
   const sizesIdFromDb = await sql`

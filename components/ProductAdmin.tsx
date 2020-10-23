@@ -24,7 +24,11 @@ const ProductAdmin = (props: Props) => {
   const [isCategoryInputVisible, setIsCategoryInputVisible] = useState(true);
   const [newProductName, setNewProductName] = useState('');
   const [urlText, setUrlText] = useState<string>('');
+  const [urlText2, setUrlText2] = useState<string>('');
   const [imgSrc, setImgSrc] = useState<string>(
+    'https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg',
+  );
+  const [imgSrc2, setImgSrc2] = useState<string>(
     'https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg',
   );
   const [price, setPrice] = useState<number>(0);
@@ -38,6 +42,11 @@ const ProductAdmin = (props: Props) => {
   function setImage(e: MouseEvent) {
     e.preventDefault();
     setImgSrc(urlText);
+  }
+
+  function setImage2(e: MouseEvent) {
+    e.preventDefault();
+    setImgSrc2(urlText2);
   }
 
   function toggleNewCategoryInput(e: ChangeEvent<HTMLSelectElement>) {
@@ -80,6 +89,7 @@ const ProductAdmin = (props: Props) => {
     const newProduct = {
       name: newProductName,
       img: imgSrc,
+      img2: imgSrc2,
       category,
       price,
       sizeOptions: [...new Set(sizeNonEmptyInputValues)],
@@ -107,10 +117,26 @@ const ProductAdmin = (props: Props) => {
           />
         </label>
         <div>
-          <ProductImage src={imgSrc} alt="imagen de producto" />
+          <ProductImage src={imgSrc} alt="imagen 2 de producto" />
           <br /> <br />
         </div>
         <button onClick={setImage}>Vista Previa</button>
+        <br />
+        <label>
+          URL2:
+          <input
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setUrlText2(e.currentTarget.value)
+            }
+            type="text"
+            value={urlText2}
+          />
+        </label>
+        <div>
+          <ProductImage src={imgSrc2} alt="imagen de producto" />
+          <br /> <br />
+        </div>
+        <button onClick={setImage2}>Vista Previa</button>
         <br />
         <label>
           Precio: $<input type="number" value={price} onChange={priceHandler} />
