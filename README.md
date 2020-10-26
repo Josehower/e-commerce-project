@@ -3,16 +3,16 @@
 <img src="./public/screenshots/home.png" width="40%">.
 <img src="./public/screenshots/cart.png" width="40%">.
 
-In this repo you have a e-comerce shop whit the next features and functionalities:
+In this repo you have a e-commerce shop with the next features and functionalities:
 
 - A product page where all the items ar listed
-- A shopping cart page and the function to modify the items on it.
+- A shopping cart page and the function to change the items on it.
 - Checkout page(s) which shows the total and asks for shipping and payment information.
-- A thank you page after a checkout has been completed
+- A thank you page after a checkout has been completed.
 - The header will show a shopping cart with the current number of items on all pages.
 - you can create new products under /administrador/nuevo-producto page.
 
-This project was created as part of the requirements for the bootcamp UpLeveled Viena.
+This project was created as part of the requirements for the bootcamp UpLeveled Vienna.
 
 ## How was created?
 
@@ -31,7 +31,7 @@ if you want to see the deployed version you can visit:
 
 ## SetUp guide
 
-you may also want to work and see the project on LocalHost following the next steps:
+you may also want to work and see the project on LocalHost. Do this following the next steps:
 
 1. Clone this repo on your local machine
 
@@ -41,7 +41,7 @@ you may also want to work and see the project on LocalHost following the next st
 
 3. Create a User and a Database for the project.
 
-4. Create a copy of the .env-example on the root of the project and modify it whit your credentials.
+4. Create a copy of the .env-example on the root of the project and modify it with your credentials.
 5. Rename this file to .env .
 6. On the command Line go to the project directory and run:
 
@@ -49,13 +49,13 @@ you may also want to work and see the project on LocalHost following the next st
 yarn install
 ```
 
-7. You may also need to install dotenv-cli globally whit:
+7. You may also need to install dotenv-cli globally with:
 
 ```bash
 yarn global add dotenv-cli
 ```
 
-8. run the migrations for your local database whit:
+8. run the migrations for your local database with:
 
 ```bash
 yarn migrateLocal up
@@ -71,7 +71,7 @@ yarn dev
 
 ## Deployment Guide into Heroku
 
-1. create your own repo whit your version of the app.
+1. create your own repo with your version of the app.
 
 2. Sign up for Heroku: https://signup.heroku.com/
 3. Create a new App
