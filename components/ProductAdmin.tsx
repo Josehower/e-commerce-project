@@ -33,7 +33,25 @@ const ProductAdmin = (props: Props) => {
   );
   const [price, setPrice] = useState<number>(0);
   const [sizeInputValues, setSizeInputValues] = useState<string[]>(['']);
+  const [colorInputValues, setColorInputValues] = useState<string[]>(['']);
   const [category, setCategory] = useState('');
+
+  function colorInputHandler(e: ChangeEvent<HTMLInputElement>, index: number) {
+    const colorStateCopy = [...colorInputValues];
+    colorStateCopy[index] = e.currentTarget.value;
+    setColorInputValues(colorStateCopy);
+  }
+
+  function addNewColor(e: MouseEvent) {
+    e.preventDefault();
+    setColorInputValues([...colorInputValues, '']);
+  }
+  function substractNewColor(e: MouseEvent) {
+    e.preventDefault();
+    const copyColorInputs = colorInputValues;
+    copyColorInputs.length = copyColorInputs.length - 1;
+    setSizeInputValues([...copyColorInputs]);
+  }
 
   function nameHandler(e: ChangeEvent<HTMLInputElement>) {
     setNewProductName(e.currentTarget.value);
@@ -86,6 +104,9 @@ const ProductAdmin = (props: Props) => {
     const sizeNonEmptyInputValues = sizeInputValues.filter(
       (value) => value !== '',
     );
+    const colorNonEmptyInputValues = colorInputValues.filter(
+      (value) => value !== '',
+    );
     const newProduct = {
       name: newProductName,
       img: imgSrc,
@@ -93,6 +114,7 @@ const ProductAdmin = (props: Props) => {
       category,
       price,
       sizeOptions: [...new Set(sizeNonEmptyInputValues)],
+      colorOptions: [...new Set(colorNonEmptyInputValues)],
     };
 
     props.getFormInfo(newProduct);
@@ -174,19 +196,32 @@ const ProductAdmin = (props: Props) => {
         <br />
         <label>
           Tallas Disponibles: <br />
-          {sizeInputValues.map((num, index) => (
+          {sizeInputValues.map((sizeString, index) => (
             <input
-              key={index}
-              name={`input_${num}`}
+              key={`${index}_sizeOption`}
+              name={`input_${sizeString}`}
               type="text"
-              value={sizeInputValues[index]}
+              value={sizeString}
               onChange={(e) => sizesInputHandler(e, index)}
             />
           ))}
           <button onClick={addNewSize}>+</button>
           <button onClick={substractNewSize}>-</button>
-          <button type="submit">submit</button>
         </label>
+        <label>
+          Colores Disponibles: <br />
+          {colorInputValues.map((color, index) => (
+            <input
+              key={`${index}_colorOption`}
+              type="color"
+              value={color}
+              onChange={(e) => colorInputHandler(e, index)}
+            />
+          ))}
+          <button onClick={addNewColor}>+</button>
+          <button onClick={substractNewColor}>-</button>
+        </label>
+        <button type="submit">submit</button>
       </form>
     </div>
   );

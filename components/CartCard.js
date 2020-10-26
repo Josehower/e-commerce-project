@@ -2,6 +2,65 @@ import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import { useState } from 'react';
 import { colors } from './Layout';
+import Select from 'react-select';
+
+const colorSquare = (color = '#ccc') => ({
+  alignItems: 'center',
+  display: 'flex',
+
+  ':before': {
+    backgroundColor: color,
+    borderRadius: 3,
+    content: '" "',
+    display: 'block',
+    marginRight: 8,
+    height: '20px',
+    width: '20px',
+    border: `1px solid ${colors.black}`,
+    boxShadow: `2px 3px ${colors.gray}`,
+  },
+});
+
+const colorSelectStyle = {
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: 'white',
+    width: '80px',
+    height: '50px',
+  }),
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    ...colorSquare(data.backgroundColor),
+    width: '80px',
+    height: '50px',
+  }),
+  option: (styles, { data }) => {
+    return {
+      ...styles,
+      ...colorSquare(data.backgroundColor),
+      background: colors.primaryWhite,
+      width: '40px',
+      padding: '5px 0',
+      margin: '3px auto',
+      justifyContent: 'center',
+      borderRadius: 5,
+    };
+  },
+  menu: (styles) => ({
+    ...styles,
+    backgroundColor: 'white',
+    width: '50px',
+    padding: '0',
+    border: 'none',
+    margin: '0',
+    overflow: 'hidden',
+  }),
+  menuList: (styles) => ({
+    ...styles,
+    padding: '0',
+    margin: '0',
+  }),
+};
 
 const Img = styled.img`
   width: 30vw;
@@ -46,6 +105,11 @@ const CartCard = (props) => {
     props.setCartItems(updatedCart);
   }
 
+  function colorSelectorHandler(info) {
+    const newColor = info.value;
+    updateCartItem(info.name, newColor);
+  }
+
   function deleteCartItem() {
     const updatedCart = props.deleteItemFromCart(cartItem.id, props.cartItems);
     props.setCartItems(updatedCart);
@@ -74,6 +138,32 @@ const CartCard = (props) => {
             ))}
           </select>
         </label>
+        <Select
+          options={cartItem.colorOptions.map((color, index) => {
+            return {
+              name: 'color',
+              value: color,
+              label: ' ',
+              backgroundColor: color,
+              placeHolder: 'select color',
+            };
+          })}
+          defaultValue={{
+            name: 'color',
+            value: cartItem.color,
+            label: ' ',
+            backgroundColor: cartItem.color,
+          }}
+          value={{
+            name: 'color',
+            value: cartItem.color,
+            label: ' ',
+            backgroundColor: cartItem.color,
+          }}
+          onChange={colorSelectorHandler}
+          styles={colorSelectStyle}
+          label="color"
+        />
         <label>
           Cantidad: &nbsp;
           <input

@@ -139,7 +139,17 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       ? referenceProduct.sizeOptions?.length
       : false;
 
-    if (isObjectCookieNotWellFormated(itemOnCookie, sizeOptionsRef)) {
+    const colorOptionsRef = referenceProduct
+      ? referenceProduct.colorOptions?.length
+      : false;
+
+    if (
+      isObjectCookieNotWellFormated(
+        itemOnCookie,
+        sizeOptionsRef,
+        colorOptionsRef,
+      )
+    ) {
       dataBaseProduct = [];
       corruptCookie = true;
     }
@@ -153,9 +163,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       ...itemOnCookie,
       ...product,
       size: product.sizeOptions[itemOnCookie.sizeId],
+      color: product.colorOptions[itemOnCookie.colorId],
     };
   });
-  cartItemsFromProps.forEach((item) => delete item.sizeId);
+  cartItemsFromProps.forEach((item) => {
+    delete item.sizeId;
+    delete item.colorId;
+  });
 
   return {
     props: {

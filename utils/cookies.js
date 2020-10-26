@@ -6,7 +6,12 @@ export function addItemToCart(newItem) {
   const cookieItemInfo = {
     id: newItem.id,
     qty: newItem.qty,
-    sizeId: newItem.sizeOptions.findIndex((option) => newItem.size === option),
+    sizeId: newItem.sizeOptions.findIndex(
+      (sizeOpt) => newItem.size === sizeOpt,
+    ),
+    colorId: newItem.colorOptions.findIndex(
+      (colorOpt) => newItem.color === colorOpt,
+    ),
   };
 
   const indexOfItemToSum = currentCart.findIndex(
@@ -15,7 +20,8 @@ export function addItemToCart(newItem) {
 
   if (indexOfItemToSum !== -1) {
     currentCart[indexOfItemToSum].qty += cookieItemInfo.qty;
-    currentCart[indexOfItemToSum].size = cookieItemInfo.size;
+    currentCart[indexOfItemToSum].sizeId = cookieItemInfo.sizeId;
+    currentCart[indexOfItemToSum].colorId = cookieItemInfo.colorId;
     cookies.set('cart', JSON.stringify([...currentCart]));
     return;
   }
@@ -33,7 +39,12 @@ export function updateArticle(newItem, OldItemId, fullItems) {
   const newCookieItem = {
     id: newItem.id,
     qty: newItem.qty,
-    sizeId: newItem.sizeOptions.findIndex((option) => newItem.size === option),
+    sizeId: newItem.sizeOptions.findIndex(
+      (sizeOpt) => newItem.size === sizeOpt,
+    ),
+    colorId: newItem.colorOptions.findIndex(
+      (colorOpt) => newItem.color === colorOpt,
+    ),
   };
 
   cartCopy[itemIndexOnCookie] = newCookieItem;
@@ -43,6 +54,7 @@ export function updateArticle(newItem, OldItemId, fullItems) {
     id: newItem.id,
     qty: newItem.qty,
     size: fullItems[itemIndexOnCookie].sizeOptions[newCookieItem.sizeId],
+    color: fullItems[itemIndexOnCookie].colorOptions[newCookieItem.colorId],
   };
   const fullItemsCopy = [...fullItems];
 
@@ -72,7 +84,7 @@ export function deleteCartCookie() {
   cookies.remove('cart');
 }
 
-export function isObjectCookieNotWellFormated(object, sizeOptRef) {
+export function isObjectCookieNotWellFormated(object, sizeOptRef, colorOptRef) {
   if (!Number.isInteger(object.qty)) {
     return true;
   }
@@ -80,6 +92,9 @@ export function isObjectCookieNotWellFormated(object, sizeOptRef) {
     return true;
   }
   if (!Number.isInteger(object.id)) {
+    return true;
+  }
+  if (!(Number.isInteger(object.colorId) && colorOptRef > object.colorId)) {
     return true;
   }
 

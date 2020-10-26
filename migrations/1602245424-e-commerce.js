@@ -2,6 +2,7 @@ const inventory = [
   {
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     name: 'Buso botón',
     category: 'busos',
     img: '/productos-liamty/buso-botón.jpg',
@@ -12,6 +13,7 @@ const inventory = [
     category: 'busos',
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/buso-clasico.jpg',
     img2: '/large-images/buso-clasico-large.jpg',
   },
@@ -20,6 +22,7 @@ const inventory = [
     category: 'busos',
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/buso-cuadros.jpg',
     img2: '/large-images/buso-cuadros-large.jpg',
   },
@@ -28,6 +31,7 @@ const inventory = [
     category: 'busos',
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/buso-hombro.jpg',
     img2: '/large-images/buso-hombro-large.jpg',
   },
@@ -36,6 +40,7 @@ const inventory = [
     category: 'busos',
     price: 60000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/buso-maya.jpg',
     img2: '/large-images/buso-maya-large.jpg',
   },
@@ -44,6 +49,7 @@ const inventory = [
     category: 'busos',
     price: 55000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/buso-trenza.jpg',
     img2: '/large-images/buso-trenza-large.jpg',
   },
@@ -52,6 +58,7 @@ const inventory = [
     category: 'gabanes',
     price: 65000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/gabán-botón.jpg',
     img2: '/large-images/gabán-botón-large.jpg',
   },
@@ -60,6 +67,7 @@ const inventory = [
     category: 'gabanes',
     price: 65000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#cc2828', '#286dc8'],
     img: '/productos-liamty/gabán-combinado.jpg',
     img2: '/large-images/gabán-combinado-large.jpg',
   },
@@ -68,6 +76,7 @@ const inventory = [
     category: 'vestidos',
     price: 60000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/vestido-unicolor.jpg',
     img2: '/large-images/vestido-unicolor-large.jpg',
   },
@@ -76,6 +85,7 @@ const inventory = [
     category: 'gabanes',
     price: 65000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/gabán-kimono.jpg',
     img2: '/large-images/gabán-kimono-large.jpg',
   },
@@ -84,6 +94,7 @@ const inventory = [
     category: 'vestidos',
     price: 80000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/vestido-botón.jpg',
     img2: '/large-images/vestido-botón-large.jpg',
   },
@@ -92,6 +103,7 @@ const inventory = [
     category: 'vestidos',
     price: 75000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/vestido-raya.jpg',
     img2: '/large-images/vestido-raya-large.jpg',
   },
@@ -100,6 +112,7 @@ const inventory = [
     category: 'busos',
     price: 60000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/buso-cuello-caído.jpg',
     img2: '/large-images/buso-cuello-caído-large.jpg',
   },
@@ -108,6 +121,7 @@ const inventory = [
     category: 'busos',
     price: 50000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/buso-cuello-tortuga.jpg',
     img2: '/large-images/buso-cuello-tortuga-large.jpg',
   },
@@ -116,6 +130,7 @@ const inventory = [
     category: 'vestidos',
     price: 75000,
     sizeOptions: ['TALLA UNICA'],
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
     img: '/productos-liamty/vestido-cuello-caído.jpg',
     img2: '/large-images/vestido-cuello-caído-large.jpg',
   },
@@ -131,6 +146,16 @@ const sizeOptionsArray = [].concat(
 const sizeOptionsSet = [...new Set(sizeOptionsArray)].map((option) => {
   return { size_option_name: option };
 });
+//formatthe color options into an array.
+const colorOptionsArray = [].concat(
+  ...inventory.map((product) => product.colorOptions),
+);
+
+//take the size options array, delete repeated info and format the data to pass it properly to sql library.
+
+const colorOptionsSet = [...new Set(colorOptionsArray)].map((option) => {
+  return { color_option_name: option };
+});
 
 exports.up = async (sql) => {
   await sql`
@@ -144,33 +169,63 @@ exports.up = async (sql) => {
   )}`;
 
   await sql`
-	INSERT INTO size_options ${sql(sizeOptionsSet, 'size_option_name')}`;
+  INSERT INTO size_options ${sql(sizeOptionsSet, 'size_option_name')}`;
+
+  await sql`
+  INSERT INTO color_options ${sql(colorOptionsSet, 'color_option_name')}`;
 
   const sizesOnDatabase = await sql`
-SELECT * FROM size_options`;
+  SELECT * FROM size_options`;
+
+  const colorsOnDatabase = await sql`
+  SELECT * FROM color_options`;
 
   const productNamesOnDatabase = await sql`
-SELECT id,name FROM product`;
+  SELECT id,name FROM product`;
 
-  const sizeOptToDataBaseID = {};
-  [...sizesOnDatabase].forEach((obj) => {
-    sizeOptToDataBaseID[obj.size_option_name] = obj.id;
-  });
-
+  //create an object whit product name : ID
   const productNameToDataBaseID = {};
   [...productNamesOnDatabase].forEach((obj) => {
     productNameToDataBaseID[obj.name] = obj.id;
   });
 
-  const junctionTableData = inventory.map((obj) => [
+  //create an object whit sizes name : ID
+  const sizeOptToDataBaseID = {};
+  [...sizesOnDatabase].forEach((obj) => {
+    sizeOptToDataBaseID[obj.size_option_name] = obj.id;
+  });
+
+  //create an array of arrays whit [[objId, [objectZisesIds]], ...]
+  const sizesJunctionTableData = inventory.map((obj) => [
     productNameToDataBaseID[obj.name],
-    obj.sizeOptions.map((objSize) => sizeOptToDataBaseID[objSize]),
+    obj.sizeOptions.map((sizeOpt) => sizeOptToDataBaseID[sizeOpt]),
   ]);
 
-  for (const data of junctionTableData) {
+  //Create Junction table valuePairs Looping over the junctionTablData and then Looping into the array whit idZises,
+  for (const data of sizesJunctionTableData) {
     for (const sizeId of data[1]) {
       await sql`
 INSERT INTO product_sizes VALUES (${data[0]}, ${sizeId})`;
+    }
+  }
+
+  //create an object whit color name : ID
+  const colorsOnDatabaseID = {};
+  [...colorsOnDatabase].forEach((obj) => {
+    colorsOnDatabaseID[obj.color_option_name] = obj.id;
+  });
+
+  //create an array of arrays whit [[objId, [objectColorsIds]], ...]
+  const colorsJunctionTableData = inventory.map((obj) => [
+    productNameToDataBaseID[obj.name],
+    obj.colorOptions.map((colorOption) => colorsOnDatabaseID[colorOption]),
+  ]);
+
+  //Create Junction table valuePairs Looping over the colorsJunctionTableData and then Looping into the array whit colorIds,
+  for (const data of colorsJunctionTableData) {
+    for (const colorId of data[1]) {
+      await sql`
+  INSERT INTO product_colors VALUES (${data[0]}, ${colorId})`;
     }
   }
 };
@@ -181,12 +236,18 @@ exports.down = async (sql) => {
     DELETE FROM product_sizes;
   `;
     await sql`
+      DELETE FROM product_colors;
+    `;
+    await sql`
       DELETE FROM product WHERE
         name = ${item.name} AND
         img = ${item.img};
 		`;
     await sql`
       DELETE FROM size_options;
-		`;
+    `;
+    await sql`
+      DELETE FROM color_options;
+    `;
   }
 };

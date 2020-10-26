@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import Link from 'next/link';
 import { ProductType } from '../utils/types';
+import { colors } from './Layout';
 
 type Props = {
   cartItem: ProductType;
@@ -28,6 +29,16 @@ const EditLink = styled.a`
   margin: 5px;
 `;
 
+const ColorSquare = styled.div`
+  height: 20px;
+  width: 20px;
+  background: ${(props) => props.color};
+  display: inline-block;
+  border: 1px solid ${colors.black};
+  box-shadow: 2px 3px ${colors.gray};
+  border-radius: 3px;
+`;
+
 const CheckoutReview = ({ cartItem }: Props) => {
   return (
     <Card className={'cartCard'}>
@@ -35,6 +46,9 @@ const CheckoutReview = ({ cartItem }: Props) => {
       <TextCard>
         <h3>{cartItem.name}</h3>
         <div>Talla: &nbsp; {cartItem.size}</div>
+        <div>
+          Color: &nbsp; <ColorSquare color={cartItem.color} />
+        </div>
         <div>Cantidad: &nbsp; {cartItem.qty}</div>
         <div>
           $&nbsp;

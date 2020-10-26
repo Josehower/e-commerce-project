@@ -259,7 +259,7 @@ export default function Layout(props) {
         <Link href="/carrito">
           <CartLink>
             <span data-cy="number-cart-nav-mobile">{props.cartAmount}</span>
-            <Cart data-cy="icon-cart-nav-mobile" src="/Cart.png" alt="" />
+            <Cart src="/Cart.png" alt="" />
           </CartLink>
         </Link>
         <HamburguerButton onClick={toggle} isNavActive={isNavActive}>

@@ -3,6 +3,65 @@ import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 import { addItemToCart, getClientCookies } from '../utils/cookies';
 import { colors } from './Layout';
+import Select from 'react-select';
+
+const colorSquare = (color = '#ccc') => ({
+  alignItems: 'center',
+  display: 'flex',
+
+  ':before': {
+    backgroundColor: color,
+    borderRadius: 3,
+    content: '" "',
+    display: 'block',
+    marginRight: 8,
+    height: '20px',
+    width: '20px',
+    border: `1px solid ${colors.black}`,
+    boxShadow: `2px 3px ${colors.gray}`,
+  },
+});
+
+const colorSelectStyle = {
+  control: (styles) => ({
+    ...styles,
+    backgroundColor: 'white',
+    width: '80px',
+    height: '50px',
+  }),
+  singleValue: (styles, { data }) => ({
+    ...styles,
+    ...colorSquare(data.backgroundColor),
+    width: '80px',
+    height: '50px',
+  }),
+  option: (styles, { data }) => {
+    return {
+      ...styles,
+      ...colorSquare(data.backgroundColor),
+      background: colors.primaryWhite,
+      width: '40px',
+      padding: '5px 0',
+      margin: '3px auto',
+      justifyContent: 'center',
+      borderRadius: 5,
+    };
+  },
+  menu: (styles) => ({
+    ...styles,
+    backgroundColor: 'white',
+    width: '50px',
+    padding: '0',
+    border: 'none',
+    margin: '0',
+    overflow: 'hidden',
+  }),
+  menuList: (styles) => ({
+    ...styles,
+    padding: '0',
+    margin: '0',
+  }),
+};
 
 const CardHead = styled.div`
   display: grid;
@@ -73,16 +132,7 @@ const TextCard = styled.div`
 `;
 
 const Product = (props) => {
-  const [product, setProduct] = useState({
-    id: 1,
-    img: '/pants/blue-pants.jpg',
-    price: 20000,
-    qty: 1,
-    size: 'M',
-    name: 'blue pants',
-    sizeOptions: ['XL', 'L', 'M', 'S'],
-    category: 'pants',
-  });
+  const [product, setProduct] = useState(props.inventory[0]);
 
   function updateState(keyName, newValue) {
     const updatedState = { ...product };
@@ -90,48 +140,81 @@ const Product = (props) => {
     setProduct(updatedState);
   }
 
+  function colorSelectorHandler(info) {
+    const newColor = info.value;
+    updateState(info.name, newColor);
+  }
+
   useEffect(() => {
     if (props.productId) {
-      setProduct(
-        props.inventory.find((item) => {
-          return props.productId === item.id;
-        }),
-      );
+      const currentProduct = props.inventory.find((item) => {
+        return props.productId === item.id;
+      });
+      setProduct(currentProduct);
     }
   }, [props.productId, props.inventory]);
 
   return (
     <Card>
       <CardHead>
-        <h3>{product.name}</h3>
+        <h3>{product?.name}</h3>
         <div>
           $&nbsp;
           <NumberFormat
-            value={product.price * product.qty}
+            value={product?.price * product?.qty}
             displayType={'text'}
             thousandSeparator={true}
           />
         </div>
       </CardHead>
-      <Img src={product.img} alt={product.name} />
+      <Img src={product?.img} alt={product?.name} />
       <TextCard>
         <CardOptions>
           <label>
             Talla: &nbsp;
             <select
-              id="pants"
-              value={product.size}
+              id="sizes"
+              value={product?.size}
               onChange={(e) => updateState('size', e.currentTarget.value)}
               onBlur={(e) => {
                 return;
               }}
             >
-              {product.sizeOptions.map((option) => (
+              {product?.sizeOptions?.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
               ))}
             </select>
+          </label>
+          <label htmlFor="colors">
+            Color:
+            <Select
+              options={product.colorOptions.map((color, index) => {
+                return {
+                  name: 'color',
+                  value: color,
+                  label: ' ',
+                  backgroundColor: color,
+                  placeHolder: 'select color',
+                };
+              })}
+              defaultValue={{
+                name: 'color',
+                value: product.color,
+                label: ' ',
+                backgroundColor: product.color,
+              }}
+              value={{
+                name: 'color',
+                value: product.color,
+                label: ' ',
+                backgroundColor: product.color,
+              }}
+              onChange={colorSelectorHandler}
+              styles={colorSelectStyle}
+              label="color"
+            />
           </label>
           <label>
             Cantidad: &nbsp;
@@ -141,7 +224,7 @@ const Product = (props) => {
               min={1}
               max={99}
               placeholder="qty"
-              value={product.qty}
+              value={product?.qty}
               onChange={(e) =>
                 updateState('qty', parseInt(e.currentTarget.value, 10))
               }
@@ -151,6 +234,7 @@ const Product = (props) => {
         <button
           data-cy={'button-add-to-cart'}
           onClick={() => {
+            console.log(product);
             addItemToCart(product);
             props.setCartAmount(getClientCookies().length);
           }}
