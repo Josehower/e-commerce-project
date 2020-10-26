@@ -163,7 +163,7 @@ const CartCard = (props) => {
           onChange={colorSelectorHandler}
           styles={colorSelectStyle}
           label="color"
-          isSearchable="false"
+          isSearchable={false}
         />
         <label>
           Cantidad: &nbsp;
