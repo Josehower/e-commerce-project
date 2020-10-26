@@ -214,6 +214,7 @@ const Product = (props) => {
               onChange={colorSelectorHandler}
               styles={colorSelectStyle}
               label="color"
+              isSearchable="false"
             />
           </label>
           <label>
