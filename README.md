@@ -1,30 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# E-commerce-liamty Project
 
-## Getting Started
+<img src="./public/screenshots/home.png" width="40%">.
+<img src="./public/screenshots/cart.png" width="40%">.
 
-First, run the development server:
+In this repo you have a e-comerce shop whit the next features and functionalities:
+
+- A product page where all the items ar listed
+- A shopping cart page and the function to modify the items on it.
+- Checkout page(s) which shows the total and asks for shipping and payment information.
+- A thank you page after a checkout has been completed
+- The header will show a shopping cart with the current number of items on all pages.
+- you can create new products under /administrador/nuevo-producto page.
+
+This project was created as part of the requirements for the bootcamp UpLeveled Viena.
+
+## How was created?
+
+the technologies used are:
+
+- Next.js
+- React.js
+- Postgres
+- Psql
+
+## Deployed Version
+
+if you want to see the deployed version you can visit:
+
+- https://e-commerce-liamty.herokuapp.com/
+
+## SetUp guide
+
+you may also want to work and see the project on LocalHost following the next steps:
+
+1. Clone this repo on your local machine
+
+2. Download and install PostgreSQL.
+
+- https://www.postgresql.org/download/
+
+3. Create a User and a Database for the project.
+
+4. Create a copy of the .env-example on the root of the project and modify it whit your credentials.
+5. Rename this file to .env .
+6. On the command Line go to the project directory and run:
 
 ```bash
-npm run dev
-# or
+yarn install
+```
+
+7. You may also need to install dotenv-cli globally whit:
+
+```bash
+yarn global add dotenv-cli
+```
+
+8. run the migrations for your local database whit:
+
+```bash
+yarn migrateLocal up
+```
+
+9. finally run.
+
+```bash
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+10. enjoy!!!
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Deployment Guide into Heroku
 
-## Learn More
+1. create your own repo whit your version of the app.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Sign up for Heroku: https://signup.heroku.com/
+3. Create a new App
+4. Choose a name and select the "Europe" Region
+5. Click on the button in the middle called "Connect to GitHub"
+6. Search for your repository in the search box at the bottom of the page and click on the "Connect" button
+   Click on the button for "Enable Automatic Deploys"
+7. Go back to the Overview tab and click on "Configure Add-On"
+8. Search for "Postgres" and select "Heroku Postgres" from the results
+9. trigger a deploy pushing to your github repo and enjoy.
