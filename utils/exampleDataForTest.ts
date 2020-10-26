@@ -11,6 +11,8 @@ export const productsTestExample: ProductType[] = [
     qty: 1,
     size: '22',
     sizeOptions: ['22', '24', '25'],
+    color: '#f1f1e9',
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
   },
   {
     category: 'pants',
@@ -22,6 +24,8 @@ export const productsTestExample: ProductType[] = [
     qty: 1,
     size: 'L',
     sizeOptions: ['XL', 'L', 'M', 'S'],
+    color: '#000000',
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
   },
   {
     category: 'pants',
@@ -33,6 +37,8 @@ export const productsTestExample: ProductType[] = [
     qty: 7,
     size: 'S',
     sizeOptions: ['XL', 'L', 'M', 'S'],
+    color: '#000000',
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
   },
   {
     category: 'tops',
@@ -44,5 +50,7 @@ export const productsTestExample: ProductType[] = [
     qty: 4,
     size: 'M',
     sizeOptions: ['M', 'S'],
+    color: '#e9591c',
+    colorOptions: ['#f1f1e9', '#000000', '#e9591c', '#871d95'],
   },
 ];

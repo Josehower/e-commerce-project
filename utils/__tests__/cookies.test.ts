@@ -8,7 +8,7 @@ test('Add the cookie cartItem to Cookie', () => {
 
   addItemToCart(productToAdd);
 
-  expect(cookies.getJSON('cart')).toStrictEqual([{ id: 1, qty: 1, sizeId: 0 }]);
+  expect(cookies.getJSON('cart')).toStrictEqual([{ id: 1, qty: 1, sizeId: 0, colorId: 0 }]);
 });
 
 test('remove the cookie cartItem to Cookie', () => {
@@ -24,9 +24,9 @@ test('Add an existing item to the cookie and sum the qty value', () => {
 
   addItemToCart(productToAdd);
 
-  expect(cookies.getJSON('cart')).toStrictEqual([{ id: 1, qty: 1, sizeId: 0 }]);
+  expect(cookies.getJSON('cart')).toStrictEqual([{ id: 1, qty: 1, sizeId: 0, colorId: 0, }]);
 
   addItemToCart(productToAdd);
 
-  expect(cookies.getJSON('cart')).toStrictEqual([{ id: 1, qty: 2, sizeId: 0 }]);
+  expect(cookies.getJSON('cart')).toStrictEqual([{ id: 1, qty: 2, sizeId: 0, colorId: 0, }]);
 });

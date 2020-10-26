@@ -3,7 +3,7 @@ describe('the checkout process is working as expected', () => {
     cy.visit('/tienda');
     cy.clearCookie('cart');
 
-    cy.get('[data-cy=galery-item-id-1]').should('be.visible').click();
+    cy.get('[data-cy=galery-large-item-id-1]').should('be.visible').click();
 
     cy.get('[data-cy=button-add-to-cart]')
       .should('be.visible')
@@ -12,14 +12,14 @@ describe('the checkout process is working as expected', () => {
 
     cy.go('back');
 
-    cy.get('[data-cy=galery-item-id-2]').should('be.visible').click();
+    cy.get('[data-cy=galery-large-item-id-2]').should('be.visible').click();
 
     cy.get('[data-cy=button-add-to-cart]')
       .should('be.visible')
       .contains('agregar al carrito')
       .click();
 
-    cy.get('[data-cy="icon-cart-nav-mobile"]').click();
+    cy.get('[data-cy="number-cart-nav-mobile"]').click();
 
     cy.get('[data-cy="button-buy-cart"]').should('be.visible').click();
 
@@ -83,14 +83,14 @@ describe('the checkout process is working as expected', () => {
     cy.visit('/tienda');
     cy.clearCookie('cart');
 
-    cy.get('[data-cy=galery-item-id-1]').should('be.visible').click();
+    cy.get('[data-cy=galery-large-item-id-1]').should('be.visible').click();
 
     cy.get('[data-cy=button-add-to-cart]')
       .should('be.visible')
       .contains('agregar al carrito')
       .click();
 
-    cy.get('[data-cy="icon-cart-nav-mobile"]').click();
+    cy.get('[data-cy="number-cart-nav-mobile"]').click();
 
     cy.get('[data-cy="button-buy-cart"]').should('be.visible').click();
 
