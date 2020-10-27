@@ -3,7 +3,7 @@
 <img src="./public/screenshots/home.png" width="40%">.
 <img src="./public/screenshots/cart.png" width="40%">.
 
-In this repo you have a e-commerce shop with the next features and functionalities:
+In this repo you have a mobile version of a e-commerce shop with the next features and functionalities:
 
 - A product page where all the items ar listed
 - A shopping cart page and the function to change the items on it.
@@ -25,7 +25,7 @@ the technologies used are:
 
 ## Deployed Version
 
-if you want to see the deployed version you can visit:
+if you want to see the deployed version you can visit, just dont forget to make your screen smaller. Is a mobile version only (for NOW):
 
 - https://e-commerce-liamty.herokuapp.com/
 
